@@ -1,92 +1,35 @@
-import { useEffect, useState, Component } from "react";
+import { useEffect, useState, Component, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
 import store, { STATES } from "@/reduxState";
 import { connect, useSelector } from "react-redux";
 
-const cameraTranslationStart = new THREE.Vector3(3, 2, 7);
-const cameraTranslationEnd = new THREE.Vector3(-0.05, 2, 4.3);
-const cameraRotationStart = new THREE.Euler(0, 0.5, 0);
-const cameraRotationEnd = new THREE.Euler(
+// drift animation
+const cameraTranslationDriftStart = new THREE.Vector3(3, 2, 7);
+const cameraTranslationDriftEnd = new THREE.Vector3(0, 2, 6);
+const cameraRotationDriftStart = new THREE.Euler(0, 0.5, 0);
+const cameraRotationDriftEnd = new THREE.Euler(0, 0, 0);
+
+// zoom animation
+const cameraTranslationZoomEnd = new THREE.Vector3(-0.05, 2, 4.3);
+const cameraRotationZoomStart = new THREE.Euler(0, 0.5, 0);
+const cameraRotationZoomEnd = new THREE.Euler(
     -Math.PI / 8,
     Math.PI / 8,
     Math.PI / 32
 );
 
-const cameraMoveDuration = 1000; //8000;
+const cameraZoomDuration = 2000; //8000;
+const cameraDriftDuration = 8000;
 
 const mapStateToProps = (state: any) => ({ thisState: state });
 
 function ThreeCanvas(props: any) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
+    let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
+    let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
-
-    useEffect(() => {
-        function startZoomInAnimation() {
-            if (!camera) return;
-
-            new TWEEN.Tween(camera.position)
-                .to(cameraTranslationEnd, cameraMoveDuration)
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start()
-                .onComplete(() => {
-                    endZoomInHandler();
-                });
-
-            new TWEEN.Tween(camera.rotation)
-                .to(
-                    {
-                        x: cameraRotationEnd.x,
-                        y: cameraRotationEnd.y,
-                        z: cameraRotationEnd.z,
-                    },
-                    cameraMoveDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start();
-        }
-
-        function startZoomOutAnimation() {
-            if (!camera) return;
-
-            new TWEEN.Tween(camera.position)
-                .to(
-                    {
-                        x: cameraTranslationStart.x,
-                        y: cameraTranslationStart.y,
-                        z: cameraTranslationStart.z,
-                    },
-                    cameraMoveDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start()
-                .onComplete(() => {
-                    endZoomOutHandler();
-                });
-
-            new TWEEN.Tween(camera.rotation)
-                .to(
-                    {
-                        x: cameraRotationStart.x,
-                        y: cameraRotationStart.y,
-                        z: cameraRotationStart.z,
-                    },
-                    cameraMoveDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start();
-        }
-
-        switch (thisState.appState.state) {
-            case STATES.ZOOM_IN:
-                startZoomInAnimation();
-                break;
-            case STATES.ZOOM_OUT:
-                startZoomOutAnimation();
-                break;
-        }
-    }, [thisState, camera]);
 
     const endZoomInHandler = () => {
         store.dispatch({ type: "end_zoom_in" });
@@ -96,6 +39,7 @@ function ThreeCanvas(props: any) {
         store.dispatch({ type: "end_zoom_out" });
     };
 
+    // Initialize camera
     useEffect(() => {
         // Create a Three.js camera
         setCamera(
@@ -108,23 +52,16 @@ function ThreeCanvas(props: any) {
         );
     }, []);
 
+    // Initialize scene
     useEffect(() => {
         if (!camera) return;
 
         // Create a Three.js scene
         const scene = new THREE.Scene();
 
-        camera.position.set(
-            cameraTranslationStart.x,
-            cameraTranslationStart.y,
-            cameraTranslationStart.z
-        );
-
-        camera.rotation.set(
-            cameraRotationStart.x,
-            cameraRotationStart.y,
-            cameraRotationStart.z
-        );
+        //reset camera positions
+        camera.position.copy(cameraTranslationDriftStart);
+        camera.rotation.copy(cameraRotationDriftStart);
 
         // Create a Three.js renderer
         const canvas: HTMLElement = document.getElementById(
@@ -158,6 +95,125 @@ function ThreeCanvas(props: any) {
 
         animate();
     }, [camera]);
+
+    // Handle state change.
+    useEffect(() => {
+        function startZoomInAnimation() {
+            if (!camera) return;
+
+            console.log("start zoom in animation");
+
+            new TWEEN.Tween(camera.position)
+                .to(cameraTranslationZoomEnd, cameraZoomDuration)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start()
+                .onComplete(() => {
+                    endZoomInHandler();
+                });
+
+            new TWEEN.Tween(camera.rotation)
+                .to(
+                    {
+                        x: cameraRotationZoomEnd.x,
+                        y: cameraRotationZoomEnd.y,
+                        z: cameraRotationZoomEnd.z,
+                    },
+                    cameraZoomDuration
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+        }
+
+        function startZoomOutAnimation() {
+            if (!camera) return;
+
+            console.log("start zoom out animation");
+
+            // reset camera
+            camera.position.copy(cameraTranslationZoomEnd);
+            camera.rotation.copy(cameraRotationZoomEnd);
+
+            new TWEEN.Tween(camera.position)
+                .to(
+                    {
+                        x: cameraTranslationDriftStart.x,
+                        y: cameraTranslationDriftStart.y,
+                        z: cameraTranslationDriftStart.z,
+                    },
+                    cameraZoomDuration
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start()
+                .onComplete(() => {
+                    endZoomOutHandler();
+                });
+
+            new TWEEN.Tween(camera.rotation)
+                .to(
+                    {
+                        x: cameraRotationZoomStart.x,
+                        y: cameraRotationZoomStart.y,
+                        z: cameraRotationZoomStart.z,
+                    },
+                    cameraZoomDuration
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+        }
+
+        function startDriftAnimation() {
+            if (!camera) return;
+
+            console.log("start drift animation");
+
+            //reset camera positions
+            camera.position.copy(cameraTranslationDriftStart);
+            camera.rotation.copy(cameraRotationDriftStart);
+
+            driftTranslationAnimation.current = new TWEEN.Tween(camera.position)
+                .to(cameraTranslationDriftEnd, cameraDriftDuration)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .yoyo(true)
+                .repeat(Infinity)
+                .start();
+
+            driftRotationAnimation.current = new TWEEN.Tween(camera.rotation)
+                .to(
+                    {
+                        x: cameraRotationDriftEnd.x,
+                        y: cameraRotationDriftEnd.y,
+                        z: cameraRotationDriftEnd.z,
+                    },
+                    cameraDriftDuration
+                )
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .yoyo(true)
+                .repeat(Infinity)
+                .start();
+        }
+
+        if (driftTranslationAnimation.current) {
+            driftTranslationAnimation.current.end();
+        }
+
+        if (driftRotationAnimation.current) {
+            driftRotationAnimation.current.end();
+        }
+
+        switch (thisState.appState.state) {
+            case STATES.ZOOM_IN:
+                startZoomInAnimation();
+                break;
+            case STATES.ZOOM_OUT:
+                startZoomOutAnimation();
+                break;
+            case STATES.INIT:
+                startDriftAnimation();
+                break;
+            default:
+                break;
+        }
+    }, [thisState, camera]);
 
     return (
         <canvas

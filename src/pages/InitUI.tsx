@@ -13,7 +13,7 @@ function InitUI(props: any) {
     return (
         <div>
             <div
-                className="center"
+                className="startButton"
                 style={{
                     zIndex: 100,
                     display:

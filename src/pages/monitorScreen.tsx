@@ -9,8 +9,6 @@ function MonitorScreen(props: any) {
         store.dispatch({ type: "start_zoom_out" });
     };
 
-    console.log(props.thisState.state);
-
     return (
         <div
             className="center"
@@ -20,7 +18,16 @@ function MonitorScreen(props: any) {
                     props.thisState.state == STATES.MONITOR ? "flex" : "none",
             }}
         >
-            <StartButton onClick={() => clickGoBackButtonHandler()} />
+            <div
+                className="startButton"
+                style={{
+                    backgroundColor: "rgba(29, 6, 48,1)",
+                    width: "100%",
+                    height: "100%",
+                }}
+            >
+                <StartButton onClick={() => clickGoBackButtonHandler()} />
+            </div>
         </div>
     );
 }
