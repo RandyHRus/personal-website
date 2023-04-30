@@ -3,8 +3,21 @@ import { Inter } from "next/font/google";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as TWEEN from "@tweenjs/tween.js";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const cameraTranslationStart = new THREE.Vector3(3, 2, 7);
+const cameraTranslationEnd = new THREE.Vector3(-0.05, 2, 4.17);
+const cameraRotationStart = new THREE.Euler(0, 0.5, 0);
+const cameraRotationEnd = new THREE.Euler(
+    -Math.PI / 8,
+    Math.PI / 8,
+    Math.PI / 32
+);
+
+const waitDuration = 2000;
+const cameraMoveDuration = 8000;
 
 export default function Home() {
     useEffect(() => {
@@ -15,10 +28,20 @@ export default function Home() {
         const camera = new THREE.PerspectiveCamera(
             90,
             window.innerWidth / window.innerHeight,
-            1,
+            0.01,
             1000
         );
-        camera.position.set(0, 0, 50);
+        camera.position.set(
+            cameraTranslationStart.x,
+            cameraTranslationStart.y,
+            cameraTranslationStart.z
+        );
+
+        camera.rotation.set(
+            cameraRotationStart.x,
+            cameraRotationStart.y,
+            cameraRotationStart.z
+        );
 
         // Create a Three.js renderer
         const canvas: HTMLElement = document.getElementById(
@@ -43,8 +66,27 @@ export default function Home() {
             }
         );
 
+        new TWEEN.Tween(camera.position)
+            .to(cameraTranslationEnd, cameraMoveDuration)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start();
+
+        new TWEEN.Tween(camera.rotation)
+            .to(
+                {
+                    x: cameraRotationEnd.x,
+                    y: cameraRotationEnd.y,
+                    z: cameraRotationEnd.z,
+                },
+                cameraMoveDuration
+            )
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start();
+
         // Add animation and update the scene
         const animate = () => {
+            console.log(camera.rotation);
+            TWEEN.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         };

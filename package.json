@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@mui/material": "^5.12.2",
     "@react-three/drei": "^9.66.0",
     "@react-three/fiber": "^8.12.2",
+    "@tweenjs/tween.js": "^19.0.0",
     "@types/node": "18.16.0",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
