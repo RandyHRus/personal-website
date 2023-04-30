@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
+import { Button } from "@mui/material";
+import StartButton from "@/components/startButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,17 +22,52 @@ const waitDuration = 2000;
 const cameraMoveDuration = 8000;
 
 export default function Home() {
+    const [camera, setCamera] = useState<THREE.Camera | null>(null);
+
+    const clickStartButtonHandler = () => {
+        console.log("starting");
+        startZoomAnimation();
+    };
+
+    function startZoomAnimation() {
+        if (!camera) return;
+
+        new TWEEN.Tween(camera.position)
+            .to(cameraTranslationEnd, cameraMoveDuration)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start();
+
+        new TWEEN.Tween(camera.rotation)
+            .to(
+                {
+                    x: cameraRotationEnd.x,
+                    y: cameraRotationEnd.y,
+                    z: cameraRotationEnd.z,
+                },
+                cameraMoveDuration
+            )
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start();
+    }
+
     useEffect(() => {
+        // Create a Three.js camera
+        setCamera(
+            new THREE.PerspectiveCamera(
+                90,
+                window.innerWidth / window.innerHeight,
+                0.01,
+                1000
+            )
+        );
+    }, []);
+
+    useEffect(() => {
+        if (!camera) return;
+
         // Create a Three.js scene
         const scene = new THREE.Scene();
 
-        // Create a Three.js camera
-        const camera = new THREE.PerspectiveCamera(
-            90,
-            window.innerWidth / window.innerHeight,
-            0.01,
-            1000
-        );
         camera.position.set(
             cameraTranslationStart.x,
             cameraTranslationStart.y,
@@ -66,40 +103,33 @@ export default function Home() {
             }
         );
 
-        new TWEEN.Tween(camera.position)
-            .to(cameraTranslationEnd, cameraMoveDuration)
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start();
-
-        new TWEEN.Tween(camera.rotation)
-            .to(
-                {
-                    x: cameraRotationEnd.x,
-                    y: cameraRotationEnd.y,
-                    z: cameraRotationEnd.z,
-                },
-                cameraMoveDuration
-            )
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start();
-
         // Add animation and update the scene
         const animate = () => {
-            console.log(camera.rotation);
             TWEEN.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         };
 
         animate();
-    }, []);
+    }, [camera]);
 
     return (
-        <div>
-            <canvas id="threeCanvas" />
+        <div style={{ position: "relative" }}>
+            <canvas
+                id="threeCanvas"
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                }}
+            />
+            <div className="center" style={{ zIndex: 100 }}>
+                <StartButton
+                    onClick={() => clickStartButtonHandler()}
+                ></StartButton>
+            </div>
         </div>
     );
-}
-function loadGLTF(scene: THREE.Scene) {
-    throw new Error("Function not implemented.");
 }
