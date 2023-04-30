@@ -24,7 +24,6 @@ const _StartButton = styled(Button)({
     height: "80px",
     boxShadow: "0 0 12px #b19cd9",
     color: "#fff",
-    opacity: 1, // Set the opacity to 1 to make it non-transparent
     animation: `${pulseAnimation} 2s ease-in-out infinite`, // Run the animation continuously
     "&:hover": {
         backgroundColor: "#9b78c5",
