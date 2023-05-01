@@ -21,7 +21,7 @@ const cameraRotationZoomEnd = new THREE.Euler(
 );
 
 const cameraZoomDuration = 2000; //8000;
-const cameraDriftDuration = 8000;
+const cameraDriftDuration = 16000;
 
 const mapStateToProps = (state: any) => ({ thisState: state });
 

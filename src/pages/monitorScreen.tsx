@@ -1,6 +1,7 @@
 import store, { STATES } from "@/reduxState";
 import StartButton from "@/components/startButton";
 import { connect } from "react-redux";
+import PortfolioPage from "./portfolio page/portfolioPage";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
@@ -26,7 +27,7 @@ function MonitorScreen(props: any) {
                     height: "100%",
                 }}
             >
-                <StartButton onClick={() => clickGoBackButtonHandler()} />
+                <PortfolioPage />
             </div>
         </div>
     );
