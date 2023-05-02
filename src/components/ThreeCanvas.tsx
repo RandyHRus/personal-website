@@ -104,8 +104,7 @@ function ThreeCanvas(props: { thisState: any }) {
     // Handle state change.
     useEffect(() => {
         const endZoomInHandler = () => {
-            //store.dispatch({ type: "end_zoom_in" });
-            router.push("/portfolio");
+            router.push(thisState.appState.args.pageRoute);
         };
 
         function startZoomInAnimation() {

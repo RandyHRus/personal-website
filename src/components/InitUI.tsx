@@ -7,8 +7,11 @@ import { motion } from "framer-motion";
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
 function InitUI(props: any) {
-    const clickStartButtonHandler = () => {
-        store.dispatch({ type: "start_zoom_in" });
+    const clickStartButtonHandler = (pageRoute: string) => {
+        store.dispatch({
+            type: "start_zoom_in",
+            args: { pageRoute: pageRoute },
+        });
     };
 
     return (
@@ -58,15 +61,17 @@ function InitUI(props: any) {
                     >
                         <InitButton
                             text="experience"
-                            onClick={() => clickStartButtonHandler()}
+                            onClick={() =>
+                                clickStartButtonHandler("/experience")
+                            }
                         />
                         <InitButton
                             text="projects"
-                            onClick={() => clickStartButtonHandler()}
+                            onClick={() => clickStartButtonHandler("/projects")}
                         />
                         <InitButton
                             text="contact"
-                            onClick={() => clickStartButtonHandler()}
+                            onClick={() => clickStartButtonHandler("/contact")}
                         />
                     </div>
                 </div>
