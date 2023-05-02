@@ -12,23 +12,14 @@ function MonitorScreen(props: any) {
 
     return (
         <div
-            className="center"
+            className="bg-white fill-white"
             style={{
                 zIndex: 100,
                 display:
                     props.thisState.state == STATES.MONITOR ? "flex" : "none",
             }}
         >
-            <div
-                className="startButton"
-                style={{
-                    backgroundColor: "rgba(29, 6, 48,1)",
-                    width: "100%",
-                    height: "100%",
-                }}
-            >
-                <PortfolioPage />
-            </div>
+            <PortfolioPage />
         </div>
     );
 }

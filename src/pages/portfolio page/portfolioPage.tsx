@@ -21,8 +21,14 @@ export default function PortfolioPage() {
 
     return (
         <div>
-            <div className="w-full">
-                <ResponsiveAppBar></ResponsiveAppBar>
+            <div className="h-screen w-screen">
+                <div className="h-full flex flex-col">
+                    <ResponsiveAppBar></ResponsiveAppBar>
+                    <Toolbar hidden /> {/*Make content appear below toolbar.*/}
+                    <div className="flex-1 bg-indigo-900 p-32">
+                        {/*flex-1 to fill remaining space.*/}
+                    </div>
+                </div>
             </div>
         </div>
     );

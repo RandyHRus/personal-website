@@ -27,6 +27,7 @@ const mapStateToProps = (state: any) => ({ thisState: state });
 
 function ThreeCanvas(props: any) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
+    const [fadeOpacity, setFadeOpacity] = useState(0);
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
@@ -107,6 +108,9 @@ function ThreeCanvas(props: any) {
                 .to(cameraTranslationZoomEnd, cameraZoomDuration)
                 .easing(TWEEN.Easing.Quadratic.Out)
                 .start()
+                .onUpdate((_, elapsed: number) => {
+                    setFadeOpacity(elapsed * 1.4);
+                })
                 .onComplete(() => {
                     endZoomInHandler();
                 });
@@ -144,6 +148,9 @@ function ThreeCanvas(props: any) {
                 )
                 .easing(TWEEN.Easing.Quadratic.Out)
                 .start()
+                .onUpdate((_, elapsed: number) => {
+                    setFadeOpacity(1 - elapsed);
+                })
                 .onComplete(() => {
                     endZoomOutHandler();
                 });
@@ -216,16 +223,32 @@ function ThreeCanvas(props: any) {
     }, [thisState, camera]);
 
     return (
-        <canvas
-            id="threeCanvas"
+        <div
             style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
+                zIndex: 100,
+                opacity: fadeOpacity,
+                display:
+                    thisState.appState.state == STATES.MONITOR
+                        ? "none"
+                        : "flex",
             }}
-        />
+            className="three fixed left-0 right-0 top-0 bottom-0 bg-indigo-900 "
+        >
+            <canvas
+                id="threeCanvas"
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    display:
+                        thisState.appState.state == STATES.MONITOR
+                            ? "none"
+                            : "flex",
+                }}
+            />
+        </div>
     );
 }
 

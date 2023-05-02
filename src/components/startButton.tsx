@@ -19,9 +19,10 @@ const pulseAnimation = keyframes`
 const _StartButton = styled(Button)({
     margin: "1rem",
     borderRadius: "50%",
+    fontSize: "12px",
     backgroundColor: "rgba(145, 101, 235, 1)",
-    width: "80px",
-    height: "80px",
+    width: "100px",
+    height: "70px",
     boxShadow: "0 0 12px #b19cd9",
     color: "#fff",
     animation: `${pulseAnimation} 2s ease-in-out infinite`, // Run the animation continuously
@@ -32,10 +33,14 @@ const _StartButton = styled(Button)({
     },
 });
 
-export default function StartButton(props: any) {
+export default function StartButton(props: { text: string; onClick: any }) {
     return (
-        <_StartButton variant="contained" onClick={props.onClick}>
-            Start
+        <_StartButton
+            className="bg-indigo-500"
+            variant="contained"
+            onClick={props.onClick}
+        >
+            {props.text}
         </_StartButton>
     );
 }
