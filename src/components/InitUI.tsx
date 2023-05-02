@@ -1,5 +1,5 @@
 import InitButton from "@/components/initButton";
-import store, { STATES } from "@/reduxState";
+import store, { STATES } from "@/state/reduxState";
 import { connect } from "react-redux";
 import { Typography } from "@mui/material";
 import { motion } from "framer-motion";

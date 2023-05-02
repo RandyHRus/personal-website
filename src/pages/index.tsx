@@ -1,7 +1,7 @@
-import store from "@/reduxState";
+import store from "@/state/reduxState";
 import { Provider } from "react-redux";
-import InitUI from "@/InitUI";
-import ThreeCanvas from "@/ThreeCanvas";
+import InitUI from "@/components/InitUI";
+import ThreeCanvas from "@/components/ThreeCanvas";
 
 export default function Home(props: any) {
     return (

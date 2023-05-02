@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
-import store, { STATES } from "@/reduxState";
+import store, { STATES } from "@/state/reduxState";
 import { connect, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
