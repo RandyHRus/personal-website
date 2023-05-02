@@ -1,8 +1,9 @@
-import StartButton from "@/components/startButton";
+import InitButton from "@/components/initButton";
 import store, { STATES } from "@/reduxState";
 import { connect } from "react-redux";
 import ConnectedMonitorScreen from "./monitorScreen";
 import { Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
@@ -56,15 +57,15 @@ function InitUI(props: any) {
                             zIndex: 100,
                         }}
                     >
-                        <StartButton
+                        <InitButton
                             text="experience"
                             onClick={() => clickStartButtonHandler()}
                         />
-                        <StartButton
+                        <InitButton
                             text="projects"
                             onClick={() => clickStartButtonHandler()}
                         />
-                        <StartButton
+                        <InitButton
                             text="contact"
                             onClick={() => clickStartButtonHandler()}
                         />

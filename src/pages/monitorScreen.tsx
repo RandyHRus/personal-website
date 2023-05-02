@@ -1,5 +1,5 @@
 import store, { STATES } from "@/reduxState";
-import StartButton from "@/components/startButton";
+import StartButton from "@/components/initButton";
 import { connect } from "react-redux";
 import PortfolioPage from "./portfolio page/portfolioPage";
 
