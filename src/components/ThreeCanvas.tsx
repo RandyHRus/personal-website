@@ -26,17 +26,13 @@ const cameraDriftDuration = 16000;
 
 const mapStateToProps = (state: any) => ({ thisState: state });
 
-function ThreeCanvas(props: any) {
+function ThreeCanvas(props: { thisState: any }) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
     const [fadeOpacity, setFadeOpacity] = useState(0);
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
     const router = useRouter();
-
-    const endZoomInHandler = () => {
-        store.dispatch({ type: "end_zoom_in" });
-    };
 
     const endZoomOutHandler = () => {
         store.dispatch({ type: "end_zoom_out" });
@@ -101,12 +97,17 @@ function ThreeCanvas(props: any) {
         // Return a cleanup function to dispose of Three.js resources
         return () => {
             renderer.dispose();
-            //document.body.removeChild(renderer.domElement);
+            document.body.removeChild(renderer.domElement);
         };
     }, [camera]);
 
     // Handle state change.
     useEffect(() => {
+        const endZoomInHandler = () => {
+            //store.dispatch({ type: "end_zoom_in" });
+            router.push("/portfolio");
+        };
+
         function startZoomInAnimation() {
             if (!camera) return;
 
@@ -207,15 +208,9 @@ function ThreeCanvas(props: any) {
                 .start();
         }
 
-        if (driftTranslationAnimation.current) {
-            driftTranslationAnimation.current.stop();
-        }
+        driftTranslationAnimation?.current?.stop();
+        driftRotationAnimation?.current?.stop();
 
-        if (driftRotationAnimation.current) {
-            driftRotationAnimation.current.stop();
-        }
-
-        console.log(thisState);
         switch (thisState.appState.state) {
             case STATES.ZOOM_IN:
                 startZoomInAnimation();
@@ -226,10 +221,13 @@ function ThreeCanvas(props: any) {
             case STATES.INIT:
                 startDriftAnimation();
                 break;
+            case STATES.MONITOR: {
+                store.dispatch({ type: "start_zoom_out" });
+            }
             default:
                 break;
         }
-    }, [thisState, camera]);
+    }, [thisState, camera, router]);
 
     return (
         <div

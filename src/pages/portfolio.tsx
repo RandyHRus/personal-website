@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Toolbar } from "@mui/material";
 import ResponsiveAppBar from "@/components/responsiveAppBar";
+import store, { STATES } from "@/state/reduxState";
 
 const projects = [
     {
@@ -13,11 +14,10 @@ const projects = [
 ];
 
 export default function PortfolioPage() {
-    const [selectedProject, setSelectedProject] = useState(projects[0]);
-
-    const handleProjectClick = (project: any) => {
-        setSelectedProject(project);
-    };
+    // on page load
+    useEffect(() => {
+        store.dispatch({ type: "end_zoom_in" });
+    }, []);
 
     return (
         <div>
