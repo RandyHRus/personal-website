@@ -53,7 +53,7 @@ function ThreeCanvas(props: any) {
                 1000
             )
         );
-    }, [thisState]);
+    }, []);
 
     // Initialize scene
     useEffect(() => {
@@ -208,13 +208,14 @@ function ThreeCanvas(props: any) {
         }
 
         if (driftTranslationAnimation.current) {
-            driftTranslationAnimation.current.end();
+            driftTranslationAnimation.current.stop();
         }
 
         if (driftRotationAnimation.current) {
-            driftRotationAnimation.current.end();
+            driftRotationAnimation.current.stop();
         }
 
+        console.log(thisState);
         switch (thisState.appState.state) {
             case STATES.ZOOM_IN:
                 startZoomInAnimation();
