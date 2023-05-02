@@ -1,7 +1,6 @@
 import InitButton from "@/components/initButton";
 import store, { STATES } from "@/reduxState";
 import { connect } from "react-redux";
-import ConnectedMonitorScreen from "./monitorScreen";
 import { Typography } from "@mui/material";
 import { motion } from "framer-motion";
 

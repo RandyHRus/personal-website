@@ -1,8 +1,7 @@
 import store from "@/reduxState";
 import { Provider } from "react-redux";
-import ThreeCanvas from "./ThreeCanvas";
-import InitUI from "./InitUI";
-import ConnectedMonitorScreen from "./monitorScreen";
+import InitUI from "@/InitUI";
+import ThreeCanvas from "@/ThreeCanvas";
 
 export default function Home(props: any) {
     return (
@@ -10,7 +9,6 @@ export default function Home(props: any) {
             <Provider store={store}>
                 <ThreeCanvas />
                 <InitUI />
-                <ConnectedMonitorScreen></ConnectedMonitorScreen>
             </Provider>
         </div>
     );

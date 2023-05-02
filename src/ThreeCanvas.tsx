@@ -1,9 +1,10 @@
-import { useEffect, useState, Component, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
 import store, { STATES } from "@/reduxState";
 import { connect, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 // drift animation
 const cameraTranslationDriftStart = new THREE.Vector3(3, 2, 7);
@@ -31,6 +32,7 @@ function ThreeCanvas(props: any) {
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
+    const router = useRouter();
 
     const endZoomInHandler = () => {
         store.dispatch({ type: "end_zoom_in" });
@@ -40,7 +42,7 @@ function ThreeCanvas(props: any) {
         store.dispatch({ type: "end_zoom_out" });
     };
 
-    // Initialize camera
+    // Handle page load
     useEffect(() => {
         // Create a Three.js camera
         setCamera(
@@ -51,7 +53,7 @@ function ThreeCanvas(props: any) {
                 1000
             )
         );
-    }, []);
+    }, [thisState]);
 
     // Initialize scene
     useEffect(() => {
@@ -95,6 +97,12 @@ function ThreeCanvas(props: any) {
         };
 
         animate();
+
+        // Return a cleanup function to dispose of Three.js resources
+        return () => {
+            renderer.dispose();
+            //document.body.removeChild(renderer.domElement);
+        };
     }, [camera]);
 
     // Handle state change.
@@ -227,10 +235,6 @@ function ThreeCanvas(props: any) {
             style={{
                 zIndex: 100,
                 opacity: fadeOpacity,
-                display:
-                    thisState.appState.state == STATES.MONITOR
-                        ? "none"
-                        : "flex",
             }}
             className="three fixed left-0 right-0 top-0 bottom-0 bg-indigo-900 "
         >
@@ -242,10 +246,6 @@ function ThreeCanvas(props: any) {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    display:
-                        thisState.appState.state == STATES.MONITOR
-                            ? "none"
-                            : "flex",
                 }}
             />
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Grid, Paper } from "@mui/material";
-import ResponsiveAppBar from "./responsiveAppBar";
+import { Toolbar } from "@mui/material";
+import ResponsiveAppBar from "@/components/responsiveAppBar";
 
 const projects = [
     {
