@@ -5,7 +5,7 @@ import ThreeCanvas from "@/components/ThreeCanvas";
 
 export default function Home() {
     return (
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative" }} id="root">
             <Provider store={store}>
                 <ThreeCanvas />
                 <InitUI />

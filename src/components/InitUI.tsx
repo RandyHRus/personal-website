@@ -30,7 +30,7 @@ function InitUI(props: any) {
                             ? "flex"
                             : "none",
                 }}
-                className="fixed left-0 right-0 top-0 bottom-0 bg-gradient-to-b from-transparent via-indigo-950 to-transparent opacity-60"
+                className="fixed left-0 right-0 top-0 bottom-0 bg-gradient-to-b from-transparent via-primary to-transparent opacity-60"
             />
             {/* Content */}
             <AnimatePresence>

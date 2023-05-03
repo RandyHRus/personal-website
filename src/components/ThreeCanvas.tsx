@@ -232,10 +232,10 @@ function ThreeCanvas(props: { thisState: any }) {
     return (
         <div
             style={{
-                zIndex: 100,
                 opacity: fadeOpacity,
+                zIndex: 100,
             }}
-            className="three fixed left-0 right-0 top-0 bottom-0 bg-indigo-900 "
+            className="fixed left-0 right-0 top-0 bottom-0 bg-primary "
         >
             <canvas
                 id="threeCanvas"

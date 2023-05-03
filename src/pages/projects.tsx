@@ -60,7 +60,12 @@ export default function ProjectsPage() {
 
     return (
         <PortfolioPageWrapper>
-            <div className="flex flex-row flex-wrap justify-center items-center ">
+            <div
+                className="flex flex-row flex-wrap justify-center items-center "
+                style={{
+                    zIndex: 100,
+                }}
+            >
                 {projects.map((item) => (
                     <motion.button
                         layoutId={item.title}

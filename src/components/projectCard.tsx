@@ -33,7 +33,7 @@ export default function ProjectCard(props: Props) {
     };
 
     return (
-        <Card className="flex flex-col md:flex-row h-full shadow-xl rounded-lg bg-gray-800">
+        <Card className="flex flex-col md:flex-row h-full shadow-xl rounded-lg  bg-tertiary">
             <div className="md:w-1/2">
                 <div className="flex flex-wrap h-full">
                     <div className="w-full h-3/4">

@@ -18,20 +18,6 @@ interface Props {
     technologies: Component[] | null;
 }
 
-const MyCard = styled(Card)({
-    display: "flex",
-    flexDirection: "column",
-    width: "192px",
-    height: "192px",
-    "--tw-shadow":
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-    "--tw-shadow-colored":
-        "0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color)",
-    boxShadow:
-        "var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)",
-    borderRadius: "0.5rem",
-});
-
 const MyCardContent = styled(CardContent)({
     display: "flex",
     width: "100%",
@@ -44,7 +30,7 @@ export default function ProjectCardSmall(props: {
     title: string;
 }) {
     return (
-        <MyCard>
+        <Card className="flex flex-col w-48 h-48 shadow-lg rounded-lg">
             <div className="flex">
                 <CardMedia
                     component="img"
@@ -52,13 +38,13 @@ export default function ProjectCardSmall(props: {
                     title="My Card Image"
                 />
             </div>
-            <MyCardContent>
+            <CardContent className="flex w-full flex-col bg-quinary">
                 <div>
                     <Typography variant="h5" component="h2" color="white">
                         {props.title}
                     </Typography>
                 </div>
-            </MyCardContent>
-        </MyCard>
+            </CardContent>
+        </Card>
     );
 }

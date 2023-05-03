@@ -28,17 +28,9 @@ const pages = [
     { name: "Contact", link: "/contact" },
 ];
 
-const MyAppBar = styled(AppBar)({
-    position: "fixed",
-    top: 0,
-    width: "100%",
-    backgroundColor: "rgb(49 46 129)",
-    backgroundPosition: "center",
-});
-
 function ResponsiveAppBar() {
     return (
-        <MyAppBar>
+        <AppBar className="fixed bg-secondary top-0 w-full bg-center">
             <Container>
                 <Toolbar disableGutters>
                     {/*logo*/}
@@ -78,7 +70,7 @@ function ResponsiveAppBar() {
                     </Box>
                 </Toolbar>
             </Container>
-        </MyAppBar>
+        </AppBar>
     );
 }
 export default ResponsiveAppBar;
