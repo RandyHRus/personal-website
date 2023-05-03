@@ -4,43 +4,93 @@ import ResponsiveAppBar from "@/components/responsiveAppBar";
 import store, { STATES } from "@/state/reduxState";
 import PortfolioPageWrapper from "@/components/portfolioPageWrapper";
 import { AnimatePresence, motion } from "framer-motion";
+import ProjectCard from "@/components/projectCard";
+import ProjectCardSmall from "@/components/projectCardSmall";
 
-const projects = [
+interface Project {
+    id: string;
+    title: string;
+    image: string;
+    description: string;
+}
+
+const projects: Project[] = [
     {
-        id: 1,
+        id: "1",
         title: "Project 1",
-        image: "/images/project1.png",
+        image: "/images/frog.jpg",
         description: "This is the description for Project 1",
     },
     {
-        id: 2,
+        id: "2",
         title: "Project 2",
-        image: "/images/project1.png",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "3",
+        title: "Project 2",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "4",
+        title: "Project 2",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "5",
+        title: "Project 2",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "6",
+        title: "Project 2",
+        image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
 ];
 
 export default function ProjectsPage() {
-    const [selectedId, setSelectedId] = useState<number>(-1);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(
+        null
+    );
 
     return (
         <PortfolioPageWrapper>
-            {projects.map((item) => (
-                <motion.div
-                    layoutId={item.title}
-                    onClick={() => setSelectedId(item.id)}
-                    key={item.id}
-                >
-                    <motion.h5>{item.description}</motion.h5>
-                    <motion.h2>{item.title}</motion.h2>
-                </motion.div>
-            ))}
+            <div className="flex flex-row flex-wrap justify-center items-center ">
+                {projects.map((item) => (
+                    <motion.button
+                        layoutId={item.title}
+                        onClick={() => setSelectedProject(item)}
+                        key={item.id}
+                        className="  m-2 text-white"
+                        whileHover={{ scale: 1.2 }}
+                    >
+                        <ProjectCardSmall
+                            imgPath={item.image}
+                            title={item.title}
+                        />
+                    </motion.button>
+                ))}
+            </div>
             <AnimatePresence>
-                {selectedId && (
-                    <motion.div layoutId={"a"}>
-                        <motion.h5>{"a"}</motion.h5>
-                        <motion.h2>{"b"}</motion.h2>
-                        <motion.button onClick={() => setSelectedId(0)} />
+                {selectedProject && (
+                    <motion.div className="fixed">
+                        <ProjectCard
+                            title={selectedProject.title}
+                            imgPaths={[
+                                selectedProject.image,
+                                selectedProject.image,
+                                selectedProject.image,
+                                selectedProject.image,
+                            ]}
+                            text={[selectedProject.description]}
+                            projectLink={""}
+                            technologies={null}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>

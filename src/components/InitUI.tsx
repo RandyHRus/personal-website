@@ -59,9 +59,9 @@ function InitUI(props: any) {
                             }}
                         >
                             <InitButton
-                                text="experience"
+                                text="about"
                                 onClick={() =>
-                                    clickStartButtonHandler("/experience")
+                                    clickStartButtonHandler("/about")
                                 }
                             />
                             <InitButton

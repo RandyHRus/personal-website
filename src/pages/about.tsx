@@ -4,6 +4,6 @@ import ResponsiveAppBar from "@/components/responsiveAppBar";
 import store, { STATES } from "@/state/reduxState";
 import PortfolioPageWrapper from "@/components/portfolioPageWrapper";
 
-export default function ExperiencePage() {
+export default function AboutPage() {
     return <PortfolioPageWrapper></PortfolioPageWrapper>;
 }

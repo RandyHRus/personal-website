@@ -18,8 +18,8 @@ import { styled } from "@mui/material";
 
 const pages = [
     {
-        name: "Experience",
-        link: "/experience",
+        name: "About",
+        link: "/about",
     },
     {
         name: "Projects",
