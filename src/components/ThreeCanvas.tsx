@@ -221,6 +221,7 @@ function ThreeCanvas(props: { thisState: any }) {
                 startDriftAnimation();
                 break;
             case STATES.MONITOR: {
+                console.log("zooming out");
                 store.dispatch({ type: "start_zoom_out" });
             }
             default:
