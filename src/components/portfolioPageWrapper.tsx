@@ -10,15 +10,13 @@ export default function PortfolioPageWrapper(props: any) {
     }, []);
 
     return (
-        <div>
-            <div className="h-screen w-screen">
-                <div className="h-full flex flex-col">
-                    <ResponsiveAppBar></ResponsiveAppBar>
-                    <Toolbar hidden /> {/*Make content appear below toolbar.*/}
-                    {/*flex-1 to fill remaining space.*/}
-                    <div className="flex-1 bg-indigo-900 p-32">
-                        {props.children}
-                    </div>
+        <div className="h-screen w-screen">
+            <div className="h-full flex flex-col">
+                <ResponsiveAppBar></ResponsiveAppBar>
+                <Toolbar hidden /> {/*Make content appear below toolbar.*/}
+                {/*flex-1 to fill remaining space.*/}
+                <div className="flex-1 bg-indigo-900 p-32">
+                    {props.children}
                 </div>
             </div>
         </div>

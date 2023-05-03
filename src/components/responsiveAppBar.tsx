@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { styled } from "@mui/material";
 
 const pages = [
     {
@@ -27,13 +28,18 @@ const pages = [
     { name: "Contact", link: "/contact" },
 ];
 
+const MyAppBar = styled(AppBar)({
+    position: "fixed",
+    top: 0,
+    width: "100%",
+    backgroundColor: "rgb(49 46 129)",
+    backgroundPosition: "center",
+});
+
 function ResponsiveAppBar() {
     return (
-        <AppBar
-            position="static"
-            className="fixed top-0 w-full bg-gray-800 bg-center bg-transparent "
-        >
-            <Container maxWidth="xl">
+        <MyAppBar>
+            <Container>
                 <Toolbar disableGutters>
                     {/*logo*/}
                     <motion.div whileHover={{ scale: 1.2 }}>
@@ -41,10 +47,9 @@ function ResponsiveAppBar() {
                             variant="h6"
                             noWrap
                             component="a"
+                            className=" p-3"
                             href="/"
                             sx={{
-                                mr: 2,
-                                display: { xs: "none", md: "flex" },
                                 fontFamily: "monospace",
                                 fontWeight: 700,
                                 letterSpacing: ".3rem",
@@ -52,19 +57,13 @@ function ResponsiveAppBar() {
                                 textDecoration: "none",
                             }}
                         >
-                            <AdbIcon
-                                sx={{
-                                    display: { xs: "none", md: "flex" },
-                                    mr: 1,
-                                }}
-                            />
+                            <AdbIcon />
                         </Typography>
                     </motion.div>
                     {/*page navigation buttons*/}
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: "none", md: "flex" },
                         }}
                     >
                         {pages.map((page) => (
@@ -79,7 +78,7 @@ function ResponsiveAppBar() {
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </MyAppBar>
     );
 }
 export default ResponsiveAppBar;
