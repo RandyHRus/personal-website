@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom/client";
-import OfficeScene from "./OfficeScene";
+import OfficeScene from "./officeScene";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 

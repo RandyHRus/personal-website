@@ -21,7 +21,6 @@ const cameraRotationZoomEnd = new THREE.Euler(
     Math.PI / 32
 );
 
-const cameraZoomDuration = 2000; //8000;
 const cameraDriftDuration = 16000;
 
 const mapStateToProps = (state: any) => ({ thisState: state });
@@ -29,14 +28,11 @@ const mapStateToProps = (state: any) => ({ thisState: state });
 function OfficeScene(props: { thisState: any }) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
     const [fadeOpacity, setFadeOpacity] = useState(0);
+    const [yPos, setYPos] = useState<number>(0);
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
     const router = useRouter();
-
-    const endZoomOutHandler = () => {
-        store.dispatch({ type: "end_zoom_out" });
-    };
 
     // Handle page load
     useEffect(() => {
@@ -49,6 +45,11 @@ function OfficeScene(props: { thisState: any }) {
                 1000
             )
         );
+
+        // change yPos on scroll
+        window.onscroll = () => {
+            setYPos(window.pageYOffset);
+        };
     }, []);
 
     // Initialize scene
@@ -101,81 +102,8 @@ function OfficeScene(props: { thisState: any }) {
         };
     }, [camera]);
 
-    // Handle state change.
+    // Handle scroll and state change
     useEffect(() => {
-        const endZoomInHandler = () => {
-            router.push(thisState.appState.args.pageRoute);
-        };
-
-        function startZoomInAnimation() {
-            if (!camera) return;
-
-            console.log("start zoom in animation");
-
-            new TWEEN.Tween(camera.position)
-                .to(cameraTranslationZoomEnd, cameraZoomDuration)
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start()
-                .onUpdate((_, elapsed: number) => {
-                    setFadeOpacity(elapsed * 1.4);
-                })
-                .onComplete(() => {
-                    endZoomInHandler();
-                });
-
-            new TWEEN.Tween(camera.rotation)
-                .to(
-                    {
-                        x: cameraRotationZoomEnd.x,
-                        y: cameraRotationZoomEnd.y,
-                        z: cameraRotationZoomEnd.z,
-                    },
-                    cameraZoomDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start();
-        }
-
-        function startZoomOutAnimation() {
-            if (!camera) return;
-
-            console.log("start zoom out animation");
-
-            // reset camera
-            camera.position.copy(cameraTranslationZoomEnd);
-            camera.rotation.copy(cameraRotationZoomEnd);
-
-            new TWEEN.Tween(camera.position)
-                .to(
-                    {
-                        x: cameraTranslationDriftStart.x,
-                        y: cameraTranslationDriftStart.y,
-                        z: cameraTranslationDriftStart.z,
-                    },
-                    cameraZoomDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start()
-                .onUpdate((_, elapsed: number) => {
-                    setFadeOpacity(1 - elapsed);
-                })
-                .onComplete(() => {
-                    endZoomOutHandler();
-                });
-
-            new TWEEN.Tween(camera.rotation)
-                .to(
-                    {
-                        x: cameraRotationZoomStart.x,
-                        y: cameraRotationZoomStart.y,
-                        z: cameraRotationZoomStart.z,
-                    },
-                    cameraZoomDuration
-                )
-                .easing(TWEEN.Easing.Quadratic.Out)
-                .start();
-        }
-
         function startDriftAnimation() {
             if (!camera) return;
 
@@ -207,27 +135,41 @@ function OfficeScene(props: { thisState: any }) {
                 .start();
         }
 
-        driftTranslationAnimation?.current?.stop();
-        driftRotationAnimation?.current?.stop();
+        if (!camera) return;
 
         switch (thisState.appState.state) {
-            case STATES.ZOOM_IN:
-                startZoomInAnimation();
+            case STATES.DRIFT: {
+                if (yPos != 0) {
+                    store.dispatch({ type: "end_drift" });
+                    driftTranslationAnimation?.current?.stop();
+                    driftRotationAnimation?.current?.stop();
+                } else {
+                    startDriftAnimation();
+                }
                 break;
-            case STATES.ZOOM_OUT:
-                startZoomOutAnimation();
+            }
+            case STATES.STATIONARY: {
+                if (yPos == 0) {
+                    store.dispatch({ type: "start_drift" });
+                } else {
+                    const ySize = window.innerHeight;
+
+                    // change camera position to percentage of scroll to window size
+                    const scrollPercentage = window.scrollY / ySize;
+                    const newCameraPosition = cameraTranslationDriftStart
+                        .clone()
+                        .lerp(cameraTranslationDriftEnd, scrollPercentage);
+                    // change camera rotation to percentage of scroll to window size
+                    // TODO
+
+                    camera.position.copy(newCameraPosition);
+                }
                 break;
-            case STATES.INIT:
-                startDriftAnimation();
-                break;
-            case STATES.MONITOR: {
-                console.log("zooming out");
-                store.dispatch({ type: "start_zoom_out" });
             }
             default:
                 break;
         }
-    }, [thisState, camera, router]);
+    }, [camera, thisState.appState, yPos]);
 
     return (
         <div
