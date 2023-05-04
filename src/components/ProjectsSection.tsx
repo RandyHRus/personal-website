@@ -61,7 +61,7 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen bg-white p-12"
+                className="relative flex flex-col w-screen h-screen bg-white p-12 z-50"
                 id="projects"
             >
                 <div className="relative flex flex-row flex-wrap justify-center items-center ">

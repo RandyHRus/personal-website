@@ -22,19 +22,11 @@ function InitialSection(props: any) {
             {/* 3JS scene */}
             <OfficeScene />
             {/* This is a gradient to make the text easier to read */}
-            <div
-                style={{
-                    zIndex: 100,
-                }}
-                className="absolute w-full h-full bg-gradient-to-b from-transparent via-primary to-transparent opacity-60"
-            />
+            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-primary to-transparent opacity-60 z-20" />
             {/* UI content */}
             <AnimatePresence>
                 <motion.div
-                    style={{
-                        zIndex: 100,
-                    }}
-                    className="absolute flex flex-col text-center justify-center items-center w-full h-full"
+                    className="absolute flex flex-col text-center justify-center items-center w-full h-full z-40"
                     initial={{ opacity: 0, y: "100%" }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: "-100%" }}
@@ -45,15 +37,9 @@ function InitialSection(props: any) {
                     <h1 className="text-6xl font-bold text-white">
                         Randy Russell
                     </h1>
-                    <h2 className="text-3xl font-bold text-white">
-                        Software Developer
-                    </h2>
+                    <h2 className="text-3xl text-white">Software Developer</h2>
                     {/* Buttons */}
-                    <div
-                        style={{
-                            zIndex: 100,
-                        }}
-                    >
+                    <div className="z-20">
                         <InitButton
                             text="about"
                             onClick={() => clickStartButtonHandler("/about")}

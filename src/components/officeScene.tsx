@@ -4,7 +4,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
 import store, { STATES } from "@/state/reduxState";
 import { connect, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 
 // drift animation
 const cameraTranslationDriftStart = new THREE.Vector3(3, 2, 7);
@@ -14,7 +13,6 @@ const cameraRotationDriftEnd = new THREE.Euler(0, 0, 0);
 
 // zoom animation
 const cameraTranslationZoomEnd = new THREE.Vector3(-0.05, 2, 4.3);
-const cameraRotationZoomStart = new THREE.Euler(0, 0.5, 0);
 const cameraRotationZoomEnd = new THREE.Euler(
     -Math.PI / 8,
     Math.PI / 8,
@@ -29,10 +27,13 @@ function OfficeScene(props: { thisState: any }) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
     const [fadeOpacity, setFadeOpacity] = useState(0);
     const [yPos, setYPos] = useState<number>(0);
+    const [cameraTranslationZoomStart, setCameraTranslationZoomStart] =
+        useState<THREE.Vector3>(new THREE.Vector3());
+    const [cameraRotationZoomStart, setCameraRotationZoomStart] =
+        useState<THREE.Euler>(new THREE.Euler());
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
-    const router = useRouter();
 
     // Handle page load
     useEffect(() => {
@@ -109,30 +110,39 @@ function OfficeScene(props: { thisState: any }) {
 
             console.log("start drift animation");
 
-            //reset camera positions
-            camera.position.copy(cameraTranslationDriftStart);
-            camera.rotation.copy(cameraRotationDriftStart);
-
-            driftTranslationAnimation.current = new TWEEN.Tween(camera.position)
-                .to(cameraTranslationDriftEnd, cameraDriftDuration)
-                .easing(TWEEN.Easing.Quadratic.InOut)
-                .yoyo(true)
-                .repeat(Infinity)
-                .start();
-
-            driftRotationAnimation.current = new TWEEN.Tween(camera.rotation)
-                .to(
-                    {
-                        x: cameraRotationDriftEnd.x,
-                        y: cameraRotationDriftEnd.y,
-                        z: cameraRotationDriftEnd.z,
-                    },
-                    cameraDriftDuration
+            if (driftTranslationAnimation?.current) {
+                driftTranslationAnimation.current.resume();
+                driftRotationAnimation?.current?.resume();
+            } else {
+                driftTranslationAnimation.current = new TWEEN.Tween(
+                    camera.position
                 )
-                .easing(TWEEN.Easing.Quadratic.InOut)
-                .yoyo(true)
-                .repeat(Infinity)
-                .start();
+                    .to(cameraTranslationDriftEnd, cameraDriftDuration)
+                    .easing(TWEEN.Easing.Quadratic.InOut)
+                    .yoyo(true)
+                    .repeat(Infinity)
+                    .start();
+
+                driftRotationAnimation.current = new TWEEN.Tween(
+                    camera.rotation
+                )
+                    .to(
+                        {
+                            x: cameraRotationDriftEnd.x,
+                            y: cameraRotationDriftEnd.y,
+                            z: cameraRotationDriftEnd.z,
+                        },
+                        cameraDriftDuration
+                    )
+                    .easing(TWEEN.Easing.Quadratic.InOut)
+                    .yoyo(true)
+                    .repeat(Infinity)
+                    .start();
+            }
+        }
+
+        function lerp(start: number, end: number, t: number) {
+            return start * (1 - t) + end * t;
         }
 
         if (!camera) return;
@@ -141,47 +151,84 @@ function OfficeScene(props: { thisState: any }) {
             case STATES.DRIFT: {
                 if (yPos != 0) {
                     store.dispatch({ type: "end_drift" });
-                    driftTranslationAnimation?.current?.stop();
-                    driftRotationAnimation?.current?.stop();
+                    driftTranslationAnimation?.current?.pause();
+                    driftRotationAnimation?.current?.pause();
+                    setCameraTranslationZoomStart(camera.position.clone());
+                    setCameraRotationZoomStart(camera.rotation.clone());
                 } else {
                     startDriftAnimation();
                 }
                 break;
             }
-            case STATES.STATIONARY: {
+            case STATES.ZOOM: {
                 if (yPos == 0) {
                     store.dispatch({ type: "start_drift" });
                 } else {
                     const ySize = window.innerHeight;
-
-                    // change camera position to percentage of scroll to window size
                     const scrollPercentage = window.scrollY / ySize;
-                    const newCameraPosition = cameraTranslationDriftStart
-                        .clone()
-                        .lerp(cameraTranslationDriftEnd, scrollPercentage);
-                    // change camera rotation to percentage of scroll to window size
-                    // TODO
 
+                    // change camera position to percentage of scroll
+                    const newCameraPosition = new THREE.Vector3(
+                        lerp(
+                            cameraTranslationZoomStart.x,
+                            cameraTranslationZoomEnd.x,
+                            scrollPercentage
+                        ),
+                        lerp(
+                            cameraTranslationZoomStart.y,
+                            cameraTranslationZoomEnd.y,
+                            scrollPercentage
+                        ),
+                        lerp(
+                            cameraTranslationZoomStart.z,
+                            cameraTranslationZoomEnd.z,
+                            scrollPercentage
+                        )
+                    );
                     camera.position.copy(newCameraPosition);
+
+                    // change camera rotation to percentage of scroll
+                    const newCameraRotation = new THREE.Euler(
+                        lerp(
+                            cameraRotationZoomStart.x,
+                            cameraRotationZoomEnd.x,
+                            scrollPercentage
+                        ),
+                        lerp(
+                            cameraRotationZoomStart.y,
+                            cameraRotationZoomEnd.y,
+                            scrollPercentage
+                        ),
+                        lerp(
+                            cameraRotationZoomStart.z,
+                            cameraRotationZoomEnd.z,
+                            scrollPercentage
+                        )
+                    );
+                    camera.rotation.copy(newCameraRotation);
+
+                    //set fadeOpacity to percentage of scroll
+                    const newFadeOpacity = scrollPercentage;
+                    setFadeOpacity(newFadeOpacity);
                 }
                 break;
             }
             default:
                 break;
         }
-    }, [camera, thisState.appState, yPos]);
+    }, [camera, cameraTranslationZoomStart, thisState.appState, yPos]);
 
     return (
         <div
             style={{
                 opacity: fadeOpacity,
             }}
-            className="relative bg-primary "
+            className="fixed bg-primary fade h-screen w-screen z-30"
         >
             <canvas
                 id="threeCanvas"
                 style={{
-                    position: "absolute",
+                    position: "fixed",
                     top: 0,
                     left: 0,
                     width: "100%",

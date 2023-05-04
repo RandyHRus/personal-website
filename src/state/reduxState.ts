@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 
 export enum STATES {
     DRIFT = "drift",
-    STATIONARY = "stationary",
+    ZOOM = "zoom",
 }
 
 export interface app_state {
@@ -28,7 +28,7 @@ function appStateReducer(
         case "start_drift":
             return { state: STATES.DRIFT, args: action.args };
         case "end_drift":
-            return { state: STATES.STATIONARY, args: action.args };
+            return { state: STATES.ZOOM, args: action.args };
         default:
             return state;
     }
