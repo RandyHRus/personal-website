@@ -216,14 +216,20 @@ function OfficeScene(props: { thisState: any }) {
             default:
                 break;
         }
-    }, [camera, cameraTranslationZoomStart, thisState.appState, yPos]);
+    }, [
+        camera,
+        cameraRotationZoomStart,
+        cameraTranslationZoomStart,
+        thisState.appState,
+        yPos,
+    ]);
 
     return (
         <div
             style={{
                 opacity: fadeOpacity,
             }}
-            className="fixed bg-primary fade h-screen w-screen z-30"
+            className="fixed bg-tertiary fade h-screen w-screen z-30"
         >
             <canvas
                 id="threeCanvas"

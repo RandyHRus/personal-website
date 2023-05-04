@@ -16,12 +16,11 @@ module.exports = {
       },
     },
     colors: {
-        // https://www.pinterest.ca/pin/retro-purple-blues-color-scheme-blue--238339005266745082/
-        quinary: '#465892',
-        quaternary: '#546DA6',
-        tertiary: '#968EAF',
-        secondary: '#6D5593',
-        primary: '#543D7B',
+        // https://www.canva.com/colors/color-palettes/a-royal-bouquet-2/
+        primary: '#420264',
+        secondary: '#5C038C',
+        tertiary: '#1B1734',
+        quaternary: '#896FBC',
         //default
         transparent: 'transparent',
         current: 'currentColor',

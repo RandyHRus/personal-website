@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import OfficeScene from "./officeScene";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
@@ -22,8 +23,8 @@ function InitialSection(props: any) {
             {/* 3JS scene */}
             <OfficeScene />
             {/* This is a gradient to make the text easier to read */}
-            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-primary to-transparent opacity-60 z-20" />
-            {/* UI content */}
+            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-quaternary to-transparent opacity-60 z-20" />
+            {/* UI content middle */}
             <AnimatePresence>
                 <motion.div
                     className="absolute flex flex-col text-center justify-center items-center w-full h-full z-40"
@@ -38,29 +39,15 @@ function InitialSection(props: any) {
                         Randy Russell
                     </h1>
                     <h2 className="text-3xl text-white">Software Developer</h2>
-                    {/* Buttons */}
-                    <div className="z-20">
-                        <InitButton
-                            text="about"
-                            onClick={() => clickStartButtonHandler("/about")}
-                        />
-                        <InitButton
-                            text="projects"
-                            onClick={() => clickStartButtonHandler("/projects")}
-                        />
-                        <InitButton
-                            text="contact"
-                            onClick={() => clickStartButtonHandler("/contact")}
-                        />
-                    </div>
-                    {/* Scroll indicator */}
-                    <motion.div className="w-20 h-20 bg-secondary">
-                        <Typography className="text-white">
-                            Scroll down
-                        </Typography>
-                    </motion.div>
                 </motion.div>
             </AnimatePresence>
+            {/* Scroll indicator */}
+            <motion.div className="absolute flex flex-col text-center items-center bottom-0 z-40 align-middle right-0 left-0">
+                <Typography className="text-lg text-white">
+                    Scroll down
+                </Typography>
+                <KeyboardArrowDownIcon className="text-white w-20 h-20" />
+            </motion.div>
         </div>
     );
 }

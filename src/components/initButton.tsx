@@ -6,7 +6,7 @@ export default function InitButton(props: { text: string; onClick: any }) {
         <motion.button
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
-            className="bg-gradient-to-r from-primary to-secondary"
+            className="bg-gradient-to-r from-secondary to-quaternary"
             style={{
                 color: "white",
                 padding: "12px 24px",

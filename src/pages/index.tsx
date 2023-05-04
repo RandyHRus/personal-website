@@ -14,7 +14,10 @@ export default function Home() {
                 <ResponsiveAppBar />
                 <InitialSection />
                 {/**spacer to make sure that zoom completely ends before displaying further UI */}
-                <div className="relative flex flex-col w-screen h-screen" />
+                <div
+                    className="relative flex flex-col w-screen h-"
+                    style={{ height: "50vh" }}
+                />
                 <AboutSection />
                 <ProjectsSection />
                 <ContactSection />
