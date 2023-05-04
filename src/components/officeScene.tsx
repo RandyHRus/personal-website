@@ -26,7 +26,7 @@ const cameraDriftDuration = 16000;
 
 const mapStateToProps = (state: any) => ({ thisState: state });
 
-function ThreeCanvas(props: { thisState: any }) {
+function OfficeScene(props: { thisState: any }) {
     const [camera, setCamera] = useState<THREE.Camera | null>(null);
     const [fadeOpacity, setFadeOpacity] = useState(0);
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
@@ -233,9 +233,8 @@ function ThreeCanvas(props: { thisState: any }) {
         <div
             style={{
                 opacity: fadeOpacity,
-                zIndex: 100,
             }}
-            className="fixed left-0 right-0 top-0 bottom-0 bg-primary "
+            className="relative bg-primary "
         >
             <canvas
                 id="threeCanvas"
@@ -251,4 +250,4 @@ function ThreeCanvas(props: { thisState: any }) {
     );
 }
 
-export default connect(mapStateToProps)(ThreeCanvas);
+export default connect(mapStateToProps)(OfficeScene);

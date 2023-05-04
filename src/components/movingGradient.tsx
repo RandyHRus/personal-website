@@ -4,6 +4,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import store, { STATES } from "@/state/reduxState";
 import { connect, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useLoader } from "@react-three/fiber";
 
 const mapStateToProps = (state: any) => ({ thisState: state });
 
@@ -13,6 +14,21 @@ function MovingGradient(props: { thisState: any }) {
     const endZoomOutHandler = () => {
         store.dispatch({ type: "end_zoom_out" });
     };
+
+    const vertex = `
+            varying vec2 vUv; 
+            void main()
+            {
+                vUv = uv;
+            
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0 );
+                gl_Position = projectionMatrix * mvPosition;
+            }
+       `;
+
+    const fragment = `
+        
+    `;
 
     // Handle page load
     useEffect(() => {
@@ -41,20 +57,22 @@ function MovingGradient(props: { thisState: any }) {
         const light = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(light);
 
+        const clock = new THREE.Clock();
+
+        var uniform = {
+            uTime: { type: "f", value: 0.1 },
+        };
+
         //add plane
         const planeGeometry = new THREE.PlaneGeometry(5, 5, 300, 300);
-        const planeMaterial = new THREE.MeshBasicMaterial({
-            color: 0x676767,
+        const planeMaterial = new THREE.ShaderMaterial({
+            uniforms: uniform,
+            vertexShader: vertex,
+            fragmentShader: fragment,
             side: THREE.DoubleSide,
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         scene.add(plane);
-
-        //test
-        // const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        // const cube = new THREE.Mesh(geometry, material);
-        // scene.add(cube);
 
         // Create a Three.js renderer
         const canvas: HTMLElement = document.getElementById(
@@ -66,6 +84,7 @@ function MovingGradient(props: { thisState: any }) {
 
         // Add animation and update the scene
         const animate = () => {
+            planeMaterial.uniforms.uTime.value += clock.getDelta();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         };
@@ -77,7 +96,7 @@ function MovingGradient(props: { thisState: any }) {
             renderer.dispose();
             document.body.removeChild(renderer.domElement);
         };
-    }, [camera]);
+    }, [camera, fragment, vertex]);
 
     return (
         <canvas

@@ -19,18 +19,18 @@ import { styled } from "@mui/material";
 const pages = [
     {
         name: "About",
-        link: "/about",
+        link: "#about",
     },
     {
         name: "Projects",
-        link: "/projects",
+        link: "#projects",
     },
-    { name: "Contact", link: "/contact" },
+    { name: "Contact", link: "#contact" },
 ];
 
 function ResponsiveAppBar() {
     return (
-        <AppBar className="fixed bg-secondary top-0 w-full bg-center">
+        <AppBar className="fixed bg-transparent top-0 w-full bg-center">
             <Container>
                 <Toolbar disableGutters>
                     {/*logo*/}
