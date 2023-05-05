@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Toolbar } from "@mui/material";
+import { Toolbar, Typography } from "@mui/material";
 import ResponsiveAppBar from "@/components/responsiveAppBar";
 import store, { STATES } from "@/state/reduxState";
 import { AnimatePresence, motion } from "framer-motion";
@@ -61,43 +61,50 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen bg-white p-12 z-50"
+                className="relative flex flex-col w-screen h-screen z-50 bg-primary"
                 id="projects"
             >
-                <div className="relative flex flex-row flex-wrap justify-center items-center ">
-                    {projects.map((item) => (
-                        <motion.button
-                            layoutId={item.title}
-                            onClick={() => setSelectedProject(item)}
-                            key={item.id}
-                            className="  m-2 text-white"
-                            whileHover={{ scale: 1.2 }}
-                        >
-                            <ProjectCardSmall
-                                imgPath={item.image}
-                                title={item.title}
-                            />
-                        </motion.button>
-                    ))}
+                {/** app bar spacer */}
+                <div className=" h-16" />
+                <Typography variant="h1" className="text-white text-center">
+                    Projects
+                </Typography>
+                <div className="relative flex flex-col w-screen h-screen p-12 z-50">
+                    <div className="relative flex flex-row flex-wrap justify-center items-center ">
+                        {projects.map((item) => (
+                            <motion.button
+                                layoutId={item.title}
+                                onClick={() => setSelectedProject(item)}
+                                key={item.id}
+                                className="  m-2 text-white"
+                                whileHover={{ scale: 1.2 }}
+                            >
+                                <ProjectCardSmall
+                                    imgPath={item.image}
+                                    title={item.title}
+                                />
+                            </motion.button>
+                        ))}
+                    </div>
+                    <AnimatePresence>
+                        {selectedProject && (
+                            <motion.div className="relative">
+                                <ProjectCard
+                                    title={selectedProject.title}
+                                    imgPaths={[
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                    ]}
+                                    text={[selectedProject.description]}
+                                    projectLink={""}
+                                    technologies={null}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
-                <AnimatePresence>
-                    {selectedProject && (
-                        <motion.div className="relative">
-                            <ProjectCard
-                                title={selectedProject.title}
-                                imgPaths={[
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                ]}
-                                text={[selectedProject.description]}
-                                projectLink={""}
-                                technologies={null}
-                            />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
         </Provider>
     );
