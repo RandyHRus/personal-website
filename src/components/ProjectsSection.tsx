@@ -73,31 +73,33 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen z-30 bg-primary"
+                className="relative flex flex-col w-screen h-screen z-30 bg-primary skew-y-6"
                 id="projects"
             >
-                {/** app bar spacer */}
-                <div className=" h-16" />
-                <Typography variant="h1" className="text-white text-center">
-                    Projects
-                </Typography>
-                {/** Project cards list */}
-                <div className="relative flex flex-col w-screen h-screen p-12 z-50">
-                    <div className="relative flex flex-row flex-wrap justify-center items-center ">
-                        {projects.map((item) => (
-                            <motion.button
-                                layoutId={item.id}
-                                onClick={() => setSelectedProject(item)}
-                                key={item.id}
-                                className="  m-2 text-white"
-                                whileHover={{ scale: 1.2 }}
-                            >
-                                <ProjectCardSmall
-                                    imgPath={item.image}
-                                    title={item.title}
-                                />
-                            </motion.button>
-                        ))}
+                <div className="-skew-y-6">
+                    {/** app bar spacer */}
+                    <div className=" h-16" />
+                    <Typography variant="h1" className="text-white text-center">
+                        Projects
+                    </Typography>
+                    {/** Project cards list */}
+                    <div className="relative flex flex-col w-screen h-screen p-12 z-50">
+                        <div className="relative flex flex-row flex-wrap justify-center items-center ">
+                            {projects.map((item) => (
+                                <motion.button
+                                    layoutId={item.id}
+                                    onClick={() => setSelectedProject(item)}
+                                    key={item.id}
+                                    className="  m-2 text-white"
+                                    whileHover={{ scale: 1.2 }}
+                                >
+                                    <ProjectCardSmall
+                                        imgPath={item.image}
+                                        title={item.title}
+                                    />
+                                </motion.button>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import ContactSection from "@/components/contactSection";
 import AboutSection from "@/components/aboutSection";
 import Link from "next/link";
 import InitialSection from "@/components/initialSection";
+import Stripe from "@/components/stripe";
 
 export default function Home() {
     return (
@@ -19,7 +20,9 @@ export default function Home() {
                     style={{ height: "50vh" }}
                 />
                 <AboutSection />
+                <Stripe />
                 <ProjectsSection />
+                <Stripe />
                 <ContactSection />
             </Provider>
         </div>
