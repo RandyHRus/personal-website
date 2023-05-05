@@ -51,6 +51,18 @@ const projects: Project[] = [
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
+    {
+        id: "7",
+        title: "Project 2",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "8",
+        title: "Project 2",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
 ];
 
 export default function ProjectsSection() {
@@ -61,7 +73,7 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen z-50 bg-primary"
+                className="relative flex flex-col w-screen h-screen z-30 bg-primary"
                 id="projects"
             >
                 {/** app bar spacer */}
@@ -69,11 +81,12 @@ export default function ProjectsSection() {
                 <Typography variant="h1" className="text-white text-center">
                     Projects
                 </Typography>
+                {/** Project cards list */}
                 <div className="relative flex flex-col w-screen h-screen p-12 z-50">
                     <div className="relative flex flex-row flex-wrap justify-center items-center ">
                         {projects.map((item) => (
                             <motion.button
-                                layoutId={item.title}
+                                layoutId={item.id}
                                 onClick={() => setSelectedProject(item)}
                                 key={item.id}
                                 className="  m-2 text-white"
@@ -86,26 +99,37 @@ export default function ProjectsSection() {
                             </motion.button>
                         ))}
                     </div>
-                    <AnimatePresence>
-                        {selectedProject && (
-                            <motion.div className="relative">
-                                <ProjectCard
-                                    title={selectedProject.title}
-                                    imgPaths={[
-                                        selectedProject.image,
-                                        selectedProject.image,
-                                        selectedProject.image,
-                                        selectedProject.image,
-                                    ]}
-                                    text={[selectedProject.description]}
-                                    projectLink={""}
-                                    technologies={null}
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
             </div>
+            {/** Pop up*/}
+            <AnimatePresence>
+                {selectedProject && (
+                    <div
+                        className="fixed flex flex-col items-center justify-center z-50 left-0 right-0 top-0 bottom-0"
+                        onClick={() => setSelectedProject(null)}
+                    >
+                        <motion.div
+                            id="projectMotionDiv"
+                            className="w-2/3 h-2/3"
+                            layoutId={selectedProject.id}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <ProjectCard
+                                title={selectedProject.title}
+                                imgPaths={[
+                                    selectedProject.image,
+                                    selectedProject.image,
+                                    selectedProject.image,
+                                    selectedProject.image,
+                                ]}
+                                text={[selectedProject.description]}
+                                projectLink={""}
+                                technologies={null}
+                            />
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </Provider>
     );
 }
