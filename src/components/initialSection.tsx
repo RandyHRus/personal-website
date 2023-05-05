@@ -23,11 +23,11 @@ function InitialSection(props: any) {
             {/* 3JS scene */}
             <OfficeScene />
             {/* This is a gradient to make the text easier to read */}
-            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-quaternary to-transparent opacity-60 z-20" />
+            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-quaternary to-transparent opacity-60 z-officeScene-gradient" />
             {/* UI content middle */}
             <AnimatePresence>
                 <motion.div
-                    className="absolute flex flex-col text-center justify-center items-center w-full h-full z-40"
+                    className="absolute flex flex-col text-center justify-center items-center w-full h-full z-ui-items"
                     initial={{ opacity: 0, y: "100%" }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: "-100%" }}
@@ -42,7 +42,7 @@ function InitialSection(props: any) {
                 </motion.div>
             </AnimatePresence>
             {/* Scroll indicator */}
-            <motion.div className="absolute flex flex-col text-center items-center bottom-0 z-40 align-middle right-0 left-0">
+            <motion.div className="absolute flex flex-col text-center items-center bottom-0 z-ui-items align-middle right-0 left-0">
                 <Typography className="text-lg text-white">
                     Scroll down
                 </Typography>

@@ -73,17 +73,24 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen z-30 bg-primary skew-y-6"
+                id="aaa"
+                className="fixed bg-primary w-screen h-screen z-popup-fade bottom-0 top-0 left-0 right-0 opacity-5"
+            ></div>
+            <div
+                className="relative flex flex-col w-screen h-screen z-background bg-white skew-y-6"
                 id="projects"
             >
                 <div className="-skew-y-6">
                     {/** app bar spacer */}
                     <div className=" h-16" />
-                    <Typography variant="h1" className="text-white text-center">
+                    <Typography
+                        variant="h1"
+                        className="text-primary text-center"
+                    >
                         Projects
                     </Typography>
                     {/** Project cards list */}
-                    <div className="relative flex flex-col w-screen h-screen p-12 z-50">
+                    <div className="relative flex flex-col w-screen h-screen p-12 z-ui-items">
                         <div className="relative flex flex-row flex-wrap justify-center items-center ">
                             {projects.map((item) => (
                                 <motion.button

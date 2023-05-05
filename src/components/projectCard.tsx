@@ -33,7 +33,7 @@ export default function ProjectCard(props: Props) {
     };
 
     return (
-        <Card className="flex flex-col md:flex-row h-full shadow-xl rounded-lg  bg-tertiary">
+        <Card className="flex flex-col md:flex-row h-full shadow-xl rounded-lg bg-white">
             <div className="md:w-1/2">
                 <div className="flex flex-wrap h-full">
                     <div className="w-full h-3/4">
@@ -72,15 +72,10 @@ export default function ProjectCard(props: Props) {
             </div>
             <CardContent className="w-full md:w-1/2 p-4 flex flex-col justify-between">
                 <div>
-                    <Typography variant="h5" component="h2" color="white">
-                        My Card Title
+                    <Typography variant="h5" component="h2">
+                        {props.title}
                     </Typography>
-                    <Typography
-                        variant="body2"
-                        component="p"
-                        className="mt-4"
-                        color="white"
-                    >
+                    <Typography variant="body2" component="p" className="mt-4">
                         {props.text[textIndex]}
                     </Typography>
                 </div>

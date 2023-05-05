@@ -7,7 +7,7 @@ export default function AboutSection() {
     return (
         <div
             id="about"
-            className="relative flex flex-col w-screen h-screen z-50 bg-transparent"
+            className="relative flex flex-col w-screen h-screen z-background bg-transparent"
         >
             {/** app bar spacer */}
             <div className=" h-16" />
