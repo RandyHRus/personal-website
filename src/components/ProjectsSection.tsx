@@ -113,6 +113,33 @@ const projects: Project[] = [
     },
 ];
 
+const TextAnimation = (props: { text: string }) => {
+    return (
+        <div className="flex flex-col text-center items-center">
+            <div className="flex flex-row">
+                {props.text.split("").map((char, index) => (
+                    <motion.div
+                        key={index}
+                        animate={{
+                            y: ["0%", "-30%", "0%"],
+                            transition: {
+                                duration: 0.4,
+                                delay: 1 + 0.1 * index,
+                                repeat: Infinity,
+                                repeatDelay: 10,
+                            },
+                        }}
+                    >
+                        <Typography variant="h1" className=" text-primary">
+                            {char}
+                        </Typography>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 export default function ProjectsSection() {
     const [selectedProject, setSelectedProject] = useState<Project | null>(
         null
@@ -127,12 +154,7 @@ export default function ProjectsSection() {
                 <div className="-skew-y-6">
                     {/** app bar spacer */}
                     <div className=" h-16" />
-                    <Typography
-                        variant="h1"
-                        className="text-primary text-center"
-                    >
-                        Projects
-                    </Typography>
+                    <TextAnimation text="Projects" />
                     {/** Project cards list */}
                     <div className="relative flex flex-col w-screen h-auto p-12">
                         <div className="relative flex flex-row flex-wrap justify-center items-center ">
