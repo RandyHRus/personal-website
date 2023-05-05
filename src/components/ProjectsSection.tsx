@@ -73,11 +73,7 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                id="aaa"
-                className="fixed bg-primary w-screen h-screen z-popup-fade bottom-0 top-0 left-0 right-0 opacity-5"
-            ></div>
-            <div
-                className="relative flex flex-col w-screen h-screen z-background bg-white skew-y-6"
+                className="relative flex flex-col w-screen h-screen z-30 bg-white skew-y-6"
                 id="projects"
             >
                 <div className="-skew-y-6">
@@ -90,7 +86,7 @@ export default function ProjectsSection() {
                         Projects
                     </Typography>
                     {/** Project cards list */}
-                    <div className="relative flex flex-col w-screen h-screen p-12 z-ui-items">
+                    <div className="relative flex flex-col w-screen h-screen p-12">
                         <div className="relative flex flex-row flex-wrap justify-center items-center ">
                             {projects.map((item) => (
                                 <motion.button
@@ -113,29 +109,33 @@ export default function ProjectsSection() {
             {/** Pop up*/}
             <AnimatePresence>
                 {selectedProject && (
-                    <div
-                        className="fixed flex flex-col items-center justify-center z-50 left-0 right-0 top-0 bottom-0"
-                        onClick={() => setSelectedProject(null)}
-                    >
-                        <motion.div
-                            id="projectMotionDiv"
-                            className="w-2/3 h-2/3"
-                            layoutId={selectedProject.id}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <ProjectCard
-                                title={selectedProject.title}
-                                imgPaths={[
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                    selectedProject.image,
-                                ]}
-                                text={[selectedProject.description]}
-                                projectLink={""}
-                                technologies={null}
+                    <div>
+                        <div className="fixed flex flex-col items-center justify-center left-0 right-0 top-0 bottom-0 z-50">
+                            {/**fade background */}
+                            <div
+                                className="fixed flex left-0 right-0 top-0 bottom-0 z-10 bg-primary opacity-20"
+                                onClick={() => setSelectedProject(null)}
                             />
-                        </motion.div>
+                            <motion.div
+                                id="projectMotionDiv"
+                                className=" w-2/3 h-2/3 z-30"
+                                layoutId={selectedProject.id}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <ProjectCard
+                                    title={selectedProject.title}
+                                    imgPaths={[
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                        selectedProject.image,
+                                    ]}
+                                    text={[selectedProject.description]}
+                                    projectLink={""}
+                                    technologies={null}
+                                />
+                            </motion.div>
+                        </div>
                     </div>
                 )}
             </AnimatePresence>

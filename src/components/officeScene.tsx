@@ -229,7 +229,7 @@ function OfficeScene(props: { thisState: any }) {
             style={{
                 opacity: fadeOpacity,
             }}
-            className="fixed bg-tertiary h-screen w-screen z-officeScene"
+            className="fixed bg-tertiary h-screen w-screen z-10"
         >
             <canvas
                 id="threeCanvas"
