@@ -17,20 +17,15 @@ interface Props {
 
 export default function ProjectCardSmall(props: Props) {
     return (
-        <Card className="flex flex-col w-48 h-48 shadow-lg rounded-lg">
-            <div className="flex">
-                <CardMedia
-                    component="img"
-                    image={props.imgPath}
-                    title="My Card Image"
-                />
-            </div>
-            <CardContent className="flex w-full flex-col bg-white">
-                <div>
-                    <Typography variant="h5" component="h2">
-                        {props.title}
-                    </Typography>
-                </div>
+        <Card className="flex flex-col w-48 h-56 shadow-lg rounded-lg">
+            <CardMedia
+                component="img"
+                className="h-2/3"
+                image={props.imgPath}
+                title="My Card Image"
+            />
+            <CardContent className="flex justify-center items-center align-middle h-1/3 bg-white">
+                <Typography className=" text-lg ">{props.title}</Typography>
             </CardContent>
         </Card>
     );

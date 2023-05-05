@@ -17,49 +17,97 @@ interface Project {
 const projects: Project[] = [
     {
         id: "1",
-        title: "Project 1",
+        title: "Compiler",
         image: "/images/frog.jpg",
         description: "This is the description for Project 1",
     },
     {
         id: "2",
-        title: "Project 2",
+        title: "Resorto",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "3",
-        title: "Project 2",
+        title: "Piano app",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "4",
-        title: "Project 2",
+        title: "Mail server",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "5",
-        title: "Project 2",
+        title: "Machine learning",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "6",
-        title: "Project 2",
+        title: "UBC game dev",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "7",
-        title: "Project 2",
+        title: "App manager",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
     {
         id: "8",
-        title: "Project 2",
+        title: "Pinball",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "9",
+        title: "Cellular automata",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "10",
+        title: "Aquarium live wallpaper",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "11",
+        title: "Space Live wallpaper",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "12",
+        title: "Database query system",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "13",
+        title: "DNS resolver",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "14",
+        title: "Battlesnake",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "15",
+        title: "Personal website",
+        image: "/images/frog.jpg",
+        description: "This is the description for Project 2",
+    },
+    {
+        id: "16",
+        title: "Robotics",
         image: "/images/frog.jpg",
         description: "This is the description for Project 2",
     },
@@ -73,7 +121,7 @@ export default function ProjectsSection() {
     return (
         <Provider store={store}>
             <div
-                className="relative flex flex-col w-screen h-screen z-30 bg-white skew-y-6"
+                className="relative flex flex-col w-screen h-auto z-30 bg-white skew-y-6"
                 id="projects"
             >
                 <div className="-skew-y-6">
@@ -86,7 +134,7 @@ export default function ProjectsSection() {
                         Projects
                     </Typography>
                     {/** Project cards list */}
-                    <div className="relative flex flex-col w-screen h-screen p-12">
+                    <div className="relative flex flex-col w-screen h-auto p-12">
                         <div className="relative flex flex-row flex-wrap justify-center items-center ">
                             {projects.map((item) => (
                                 <motion.button
