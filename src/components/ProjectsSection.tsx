@@ -29,7 +29,7 @@ const featuredProjects: Project[] = [
     {
         id: "2",
         title: "Resort management game",
-        videoLink: "https://www.youtube.com/embed/2UwR6k8FrHo",
+        videoLink: "https://www.youtube-nocookie.com/embed/2UwR6k8FrHo",
         mainImage: "/images/resorto/resorto1.png",
         additionalImages: [
             "/images/resorto/resorto2.png",
@@ -77,7 +77,7 @@ const otherProjects: Project[] = [
     {
         id: "10",
         title: "Aquarium live wallpaper",
-        videoLink: "https://www.youtube.com/embed/qZtw3N-nGwg",
+        videoLink: "https://www.youtube-nocookie.com/embed/qZtw3N-nGwg",
         mainImage: "/images/aquarium/aquarium4.png",
         additionalImages: [
             "/images/aquarium/aquarium4.png",
@@ -142,7 +142,7 @@ const otherProjects: Project[] = [
     {
         id: "17",
         title: "Hoppy frog",
-        videoLink: "https://www.youtube.com/embed/4ACAoIvRd78",
+        videoLink: "https://www.youtube-nocookie.com/embed/4ACAoIvRd78",
         mainImage: "/images/frog/frog1.jpg",
         additionalImages: [
             "/images/frog/frog1.jpg",
@@ -193,7 +193,7 @@ const otherProjects: Project[] = [
     {
         id: "11",
         title: "Space live wallpaper",
-        videoLink: "https://www.youtube.com/embed/eLy7Q9HsUw4",
+        videoLink: "https://www.youtube-nocookie.com/embed/eLy7Q9HsUw4",
         mainImage: "/images/space/space1.png",
         additionalImages: [
             "images/space/space2.png",
