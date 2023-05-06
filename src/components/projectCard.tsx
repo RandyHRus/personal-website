@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Component, useState } from "react";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { DevIcon } from "@/icons/devicons";
 
 interface Props {
     title: string;
@@ -15,7 +16,7 @@ interface Props {
     additionalImgPaths: string[] | null;
     text: string[];
     projectLink: string;
-    technologies: Component[] | null;
+    technologies: string[] | null;
 }
 
 export default function ProjectCard(props: Props) {
@@ -65,13 +66,20 @@ export default function ProjectCard(props: Props) {
                 </div>
             </div>
             <CardContent className="w-full md:w-1/2 p-4 flex flex-col justify-between">
-                <div>
+                <div className="h-5/6">
                     <Typography variant="h5" component="h2">
                         {props.title}
                     </Typography>
                     <Typography variant="body2" component="p" className="mt-4">
                         {props.text[textIndex]}
                     </Typography>
+                </div>
+                <div className="h-1/6 justify-center flex flex-row flex-wrap">
+                    {props.technologies?.map((tech, index) => (
+                        <div key={index} className="w-12 h-12 p-2">
+                            <DevIcon iconName={tech}></DevIcon>
+                        </div>
+                    ))}
                 </div>
                 <div className="flex justify-between mt-8 ">
                     <IconButton aria-label="back" onClick={handleBack}>

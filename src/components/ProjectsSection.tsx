@@ -13,6 +13,7 @@ interface Project {
     mainImage: string;
     additionalImages: string[] | null;
     description: string;
+    technologies: string[] | null;
 }
 
 const featuredProjects: Project[] = [
@@ -23,6 +24,7 @@ const featuredProjects: Project[] = [
         mainImage: "/images/compiler/compiler.png",
         additionalImages: null,
         description: "This is the description for Project 1",
+        technologies: ["Racket", "x86-64"],
     },
     {
         id: "2",
@@ -35,6 +37,7 @@ const featuredProjects: Project[] = [
             "/images/resorto/resorto4.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#"],
     },
     {
         id: "15",
@@ -43,6 +46,17 @@ const featuredProjects: Project[] = [
         mainImage: "/images/website/personal-website.png",
         additionalImages: null,
         description: "This is the description for Project 2",
+        technologies: [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "JavaScript",
+            "TailwindCSS",
+            "CSS3",
+            "Three.js",
+            "Material-ui",
+            "Redux",
+        ],
     },
     {
         id: "5",
@@ -55,6 +69,7 @@ const featuredProjects: Project[] = [
             "/images/ml/robustLinearRegression.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Python", "NumPy", "Pandas"],
     },
 ];
 
@@ -70,6 +85,7 @@ const otherProjects: Project[] = [
             "/images/aquarium/aquarium1.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
         id: "4",
@@ -78,6 +94,7 @@ const otherProjects: Project[] = [
         mainImage: "/images/mail/smtp.png",
         additionalImages: ["/images/mail/popd.png"],
         description: "This is the description for Project 2",
+        technologies: ["C"],
     },
     {
         id: "6",
@@ -90,6 +107,7 @@ const otherProjects: Project[] = [
             "images/starfarm/starFarm4.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#"],
     },
     {
         id: "7",
@@ -102,6 +120,15 @@ const otherProjects: Project[] = [
             "images/product/product4.png",
         ],
         description: "This is the description for Project 2",
+        technologies: [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "JavaScript",
+            "CSS3",
+            "Express.js",
+            "Material-ui",
+        ],
     },
     {
         id: "8",
@@ -110,6 +137,7 @@ const otherProjects: Project[] = [
         mainImage: "/images/pinball/pinball1.png",
         additionalImages: null,
         description: "This is the description for Project 2",
+        technologies: ["JavaScript", "HTML5", "CSS3"],
     },
     {
         id: "17",
@@ -122,6 +150,7 @@ const otherProjects: Project[] = [
             "/images/frog/frog3.jpeg",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#"],
     },
     {
         id: "13",
@@ -130,6 +159,7 @@ const otherProjects: Project[] = [
         mainImage: "/images/dns/dns.png",
         additionalImages: null,
         description: "This is the description for Project 2",
+        technologies: ["Java"],
     },
     {
         id: "3",
@@ -138,6 +168,14 @@ const otherProjects: Project[] = [
         mainImage: "/images/piano/piano.jpg",
         additionalImages: null,
         description: "This is the description for Project 2",
+        technologies: [
+            "React",
+            "TypeScript",
+            "CSS3",
+            "Python",
+            "AndroidStudio",
+            "RaspberryPi",
+        ],
     },
     {
         id: "9",
@@ -150,6 +188,7 @@ const otherProjects: Project[] = [
             "/images/cells/cell4.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#"],
     },
     {
         id: "11",
@@ -162,6 +201,7 @@ const otherProjects: Project[] = [
             "images/space/space4.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
         id: "12",
@@ -173,6 +213,7 @@ const otherProjects: Project[] = [
             "images/query/query3.png",
         ],
         description: "This is the description for Project 2",
+        technologies: ["TypeScript"],
     },
     {
         id: "14",
@@ -181,6 +222,7 @@ const otherProjects: Project[] = [
         mainImage: "/images/battlesnake/battlesnake.png",
         additionalImages: null,
         description: "This is the description for Project 2",
+        technologies: ["JavaScript"],
     },
     {
         id: "16",
@@ -193,6 +235,7 @@ const otherProjects: Project[] = [
             "images/robotics/robot4.jpeg",
         ],
         description: "This is the description for Project 2",
+        technologies: ["RaspberryPi"],
     },
 ];
 
@@ -304,7 +347,7 @@ export default function ProjectsSection() {
                                     }
                                     text={[selectedProject.description]}
                                     projectLink={""}
-                                    technologies={null}
+                                    technologies={selectedProject.technologies}
                                     main={{
                                         type: selectedProject.videoLink
                                             ? "video"
