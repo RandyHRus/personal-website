@@ -4,7 +4,6 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ResponsiveAppBar from "@/components/responsiveAppBar";
 import ContactSection from "@/components/contactSection";
 import AboutSection from "@/components/aboutSection";
-import Link from "next/link";
 import InitialSection from "@/components/initialSection";
 import Stripe from "@/components/stripe";
 

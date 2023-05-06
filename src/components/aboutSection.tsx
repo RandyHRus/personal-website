@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import ResponsiveAppBar from "@/components/responsiveAppBar";
-import store, { STATES } from "@/state/reduxState";
+import React from "react";
+import { Typography } from "@mui/material";
 
 export default function AboutSection() {
     return (

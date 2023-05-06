@@ -1,14 +1,4 @@
-import {
-    Box,
-    Card,
-    CardContent,
-    CardMedia,
-    IconButton,
-    Typography,
-    styled,
-} from "@mui/material";
-import { Component, useState } from "react";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 interface Props {
     title: string;

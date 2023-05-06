@@ -1,10 +1,7 @@
-import InitButton from "@/components/initButton";
-import store, { STATES } from "@/state/reduxState";
+import store from "@/state/reduxState";
 import { connect } from "react-redux";
 import { Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import * as ReactDOM from "react-dom/client";
 import OfficeScene from "./officeScene";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 

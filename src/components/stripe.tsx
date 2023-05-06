@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import ResponsiveAppBar from "@/components/responsiveAppBar";
-import store, { STATES } from "@/state/reduxState";
-import MovingGradient from "./movingGradient";
+import React from "react";
 
 export default function AboutSection() {
     return (

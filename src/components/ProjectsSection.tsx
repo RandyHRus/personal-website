@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Toolbar, Typography } from "@mui/material";
-import ResponsiveAppBar from "@/components/responsiveAppBar";
-import store, { STATES } from "@/state/reduxState";
+import React, { useState } from "react";
+import { Typography } from "@mui/material";
+import store from "@/state/reduxState";
 import { AnimatePresence, motion } from "framer-motion";
 import ProjectCard from "@/components/projectCard";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
-import DnsIcon from "@mui/icons-material/Dns";
 
 interface Project {
     id: string;
