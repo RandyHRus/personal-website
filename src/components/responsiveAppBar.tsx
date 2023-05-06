@@ -29,7 +29,10 @@ const pages = [
 
 function ResponsiveAppBar() {
     return (
-        <AppBar className="fixed bg-transparent top-0 w-full bg-center">
+        <AppBar
+            className="fixed top-0 w-full bg-center"
+            style={{ backgroundColor: "rgba(27, 23, 52, 0.2)" }}
+        >
             <Container>
                 <Toolbar disableGutters>
                     {/*logo*/}
