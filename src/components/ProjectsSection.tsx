@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import store from "@/state/reduxState";
 import { AnimatePresence, motion } from "framer-motion";
-import ProjectCard from "@/components/projectCard";
+import ProjectCardPopup from "@/components/projectCardPopup";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
 
@@ -40,25 +40,6 @@ const featuredProjects: Project[] = [
         technologies: ["Unity", "C#"],
     },
     {
-        id: "15",
-        title: "Personal website",
-        videoLink: null,
-        mainImage: "/images/website/personal-website.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
-        technologies: [
-            "React",
-            "Next.js",
-            "TypeScript",
-            "JavaScript",
-            "TailwindCSS",
-            "CSS3",
-            "Three.js",
-            "Material-ui",
-            "Redux",
-        ],
-    },
-    {
         id: "5",
         title: "Machine learning algorithms",
         videoLink: null,
@@ -92,7 +73,7 @@ const otherProjects: Project[] = [
         title: "Mail server",
         videoLink: null,
         mainImage: "/images/mail/smtp.png",
-        additionalImages: ["/images/mail/popd.png"],
+        additionalImages: null,
         description: "This is the description for Project 2",
         technologies: ["C"],
     },
@@ -237,6 +218,25 @@ const otherProjects: Project[] = [
         description: "This is the description for Project 2",
         technologies: ["RaspberryPi"],
     },
+    {
+        id: "15",
+        title: "Personal website",
+        videoLink: null,
+        mainImage: "/images/website/personal-website.png",
+        additionalImages: null,
+        description: "This is the description for Project 2",
+        technologies: [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "JavaScript",
+            "TailwindCSS",
+            "CSS3",
+            "Three.js",
+            "Material-ui",
+            "Redux",
+        ],
+    },
 ];
 
 const TextAnimation = (props: { text: string }) => {
@@ -330,9 +330,12 @@ export default function ProjectsSection() {
                     <div>
                         <div className="fixed flex flex-col items-center justify-center left-0 right-0 top-0 bottom-0 z-50">
                             {/**fade background */}
-                            <div
-                                className="fixed flex left-0 right-0 top-0 bottom-0 z-10 bg-primary opacity-20"
+                            <motion.div
+                                className="fixed flex left-0 right-0 top-0 bottom-0 z-10 bg-tertiary opacity-20"
                                 onClick={() => setSelectedProject(null)}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 0.75 }}
+                                exit={{ opacity: 0 }}
                             />
                             <motion.div
                                 id="projectMotionDiv"
@@ -340,7 +343,7 @@ export default function ProjectsSection() {
                                 layoutId={selectedProject.id}
                                 transition={{ duration: 0.3 }}
                             >
-                                <ProjectCard
+                                <ProjectCardPopup
                                     title={selectedProject.title}
                                     additionalImgPaths={
                                         selectedProject.additionalImages

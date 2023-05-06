@@ -14,7 +14,7 @@ export default function ProjectCardSmall(props: Props) {
                 image={props.imgPath}
                 title="My Card Image"
             />
-            <CardContent className="flex justify-center items-center align-middle h-1/3 bg-white">
+            <CardContent className="flex justify-center items-center align-middle h-1/3 bg-grey">
                 <Typography className=" text-lg ">{props.title}</Typography>
             </CardContent>
         </Card>

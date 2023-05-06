@@ -19,7 +19,7 @@ interface Props {
     technologies: string[] | null;
 }
 
-export default function ProjectCard(props: Props) {
+export default function ProjectCardPopup(props: Props) {
     const [textIndex, setTextIndex] = useState(0);
 
     const handleBack = () => {
@@ -33,13 +33,15 @@ export default function ProjectCard(props: Props) {
     };
 
     return (
-        <Card className="flex flex-col md:flex-row h-full shadow-xl rounded-lg bg-white">
-            <div className="md:w-1/2">
-                <div className="flex flex-wrap h-full">
-                    <div className="w-full h-3/4">
+        <Card className="flex flex-row h-full shadow-xl rounded-lg bg-grey">
+            {/** Picture area */}
+            <div className="w-3/5 flex h-full">
+                <div className="flex flex-col h-full ">
+                    {/** Main image or video */}
+                    <div className="flex w-full flex-grow max-h-full ">
                         {props.main.type == "img" && (
                             <CardMedia
-                                className="w-full h-full"
+                                className="flex w-full h-full border border-grey rounded-lg "
                                 component="img"
                                 image={props.main.path}
                                 title="My Card Image"
@@ -47,25 +49,34 @@ export default function ProjectCard(props: Props) {
                         )}
                         {props.main.type == "video" && (
                             <CardMedia
-                                className="w-full h-full"
+                                className="flex w-full h-full border border-grey rounded-lg "
                                 component="iframe"
                                 src={props.main.path}
                             />
                         )}
                     </div>
-                    {props.additionalImgPaths?.map((path, index) => (
-                        <div className="w-1/3 h-1/4" key={index}>
-                            <CardMedia
-                                className="w-full h-full"
-                                component="img"
-                                image={path}
-                                title="My Card Image"
-                            />
+                    {/** additonal images */}
+                    {props.additionalImgPaths && (
+                        <div className="flex flex-row h-1/4">
+                            {props.additionalImgPaths.map((path, index) => (
+                                <div
+                                    className="flex flex-row w-1/3"
+                                    key={index}
+                                >
+                                    <CardMedia
+                                        className="flex w-full h-full  border border-grey rounded-lg"
+                                        component="img"
+                                        image={path}
+                                        title="My Card Image"
+                                    />
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
-            <CardContent className="w-full md:w-1/2 p-4 flex flex-col justify-between">
+            {/** Text area */}
+            <CardContent className="w-2/5 p-4 flex flex-col justify-between">
                 <div className="h-5/6">
                     <Typography variant="h5" component="h2">
                         {props.title}
