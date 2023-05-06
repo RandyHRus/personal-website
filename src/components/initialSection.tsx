@@ -8,13 +8,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
 function InitialSection(props: any) {
-    const clickStartButtonHandler = (pageRoute: string) => {
-        store.dispatch({
-            type: "start_zoom_in",
-            args: { pageRoute: pageRoute },
-        });
-    };
-
     return (
         <div id="initial" className="relative flex flex-col w-screen h-screen">
             {/* 3JS scene */}

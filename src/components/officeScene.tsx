@@ -24,8 +24,9 @@ const cameraDriftDuration = 16000;
 const mapStateToProps = (state: any) => ({ thisState: state });
 
 function OfficeScene(props: { thisState: any }) {
-    const [camera, setCamera] = useState<THREE.Camera | null>(null);
+    const [camera, setCamera] = useState<THREE.PerspectiveCamera | null>(null);
     const [fadeOpacity, setFadeOpacity] = useState(0);
+    const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
     const [yPos, setYPos] = useState<number>(0);
     const [cameraTranslationZoomStart, setCameraTranslationZoomStart] =
         useState<THREE.Vector3>(new THREE.Vector3());
@@ -34,6 +35,11 @@ function OfficeScene(props: { thisState: any }) {
     let driftTranslationAnimation = useRef<TWEEN.Tween<THREE.Vector3>>();
     let driftRotationAnimation = useRef<TWEEN.Tween<THREE.Euler>>();
     const thisState = useSelector((state) => props.thisState);
+
+    // It is laggy to resize the window, especially in a 3D scene. Use throttling to optimize. More info:
+    // https://web.archive.org/web/20220714020647/https://bencentra.com/code/2015/02/27/optimizing-window-resize.html
+    let throttledResize = useRef<boolean>(false);
+    const throttleResizeDelay: number = 250;
 
     // Handle page load
     useEffect(() => {
@@ -47,6 +53,15 @@ function OfficeScene(props: { thisState: any }) {
             )
         );
 
+        // Create a Three.js renderer
+        const canvas: HTMLElement = document.getElementById(
+            "threeCanvas"
+        ) as HTMLElement;
+        const _renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        _renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(_renderer.domElement);
+        setRenderer(_renderer);
+
         // change yPos on scroll
         window.onscroll = () => {
             setYPos(window.pageYOffset);
@@ -55,7 +70,23 @@ function OfficeScene(props: { thisState: any }) {
 
     // Initialize scene
     useEffect(() => {
-        if (!camera) return;
+        const resizeCanvas = () => {
+            if (!camera || !renderer) return;
+
+            if (!throttledResize.current) {
+                // we're throttled!
+                throttledResize.current = true;
+                // set a timeout to un-throttle
+                setTimeout(function () {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    throttledResize.current = false;
+                }, throttleResizeDelay);
+            }
+        };
+
+        if (!camera || !renderer) return;
 
         // Create a Three.js scene
         const scene = new THREE.Scene();
@@ -63,14 +94,6 @@ function OfficeScene(props: { thisState: any }) {
         //reset camera positions
         camera.position.copy(cameraTranslationDriftStart);
         camera.rotation.copy(cameraRotationDriftStart);
-
-        // Create a Three.js renderer
-        const canvas: HTMLElement = document.getElementById(
-            "threeCanvas"
-        ) as HTMLElement;
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
 
         //load GLTF
         const loader = new GLTFLoader();
@@ -96,12 +119,16 @@ function OfficeScene(props: { thisState: any }) {
 
         animate();
 
+        // Add event listener to handle resizing
+        window.addEventListener("resize", resizeCanvas);
+
         // Return a cleanup function to dispose of Three.js resources
         return () => {
             renderer.dispose();
             document.body.removeChild(renderer.domElement);
+            window.removeEventListener("resize", resizeCanvas);
         };
-    }, [camera]);
+    }, [camera, renderer]);
 
     // Handle scroll and state change
     useEffect(() => {
