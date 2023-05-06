@@ -11,7 +11,8 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 interface Props {
     title: string;
-    imgPaths: string[];
+    main: { type: "img" | "video"; path: string };
+    additionalImgPaths: string[] | null;
     text: string[];
     projectLink: string;
     technologies: Component[] | null;
@@ -19,8 +20,6 @@ interface Props {
 
 export default function ProjectCard(props: Props) {
     const [textIndex, setTextIndex] = useState(0);
-
-    const imgPaths = props.imgPaths;
 
     const handleBack = () => {
         setTextIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
@@ -37,37 +36,32 @@ export default function ProjectCard(props: Props) {
             <div className="md:w-1/2">
                 <div className="flex flex-wrap h-full">
                     <div className="w-full h-3/4">
-                        <CardMedia
-                            className="w-full h-full"
-                            component="img"
-                            image={imgPaths[0]}
-                            title="My Card Image"
-                        />
+                        {props.main.type == "img" && (
+                            <CardMedia
+                                className="w-full h-full"
+                                component="img"
+                                image={props.main.path}
+                                title="My Card Image"
+                            />
+                        )}
+                        {props.main.type == "video" && (
+                            <CardMedia
+                                className="w-full h-full"
+                                component="iframe"
+                                src={props.main.path}
+                            />
+                        )}
                     </div>
-                    <div className="w-1/3 h-1/4">
-                        <CardMedia
-                            className="w-full h-full"
-                            component="img"
-                            image={imgPaths[1]}
-                            title="My Card Image"
-                        />
-                    </div>
-                    <div className="w-1/3 h-1/4">
-                        <CardMedia
-                            className="w-full h-full"
-                            component="img"
-                            image={imgPaths[2]}
-                            title="My Card Image"
-                        />
-                    </div>
-                    <div className="w-1/3 h-1/4">
-                        <CardMedia
-                            className="w-full h-full"
-                            component="img"
-                            image={imgPaths[3]}
-                            title="My Card Image"
-                        />
-                    </div>
+                    {props.additionalImgPaths?.map((path, index) => (
+                        <div className="w-1/3 h-1/4" key={index}>
+                            <CardMedia
+                                className="w-full h-full"
+                                component="img"
+                                image={path}
+                                title="My Card Image"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
             <CardContent className="w-full md:w-1/2 p-4 flex flex-col justify-between">
