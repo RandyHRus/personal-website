@@ -295,7 +295,7 @@ export function DevIcon(props: { iconName: string }) {
                 />
             );
         case "x86-64":
-            return <Typography>x86-64</Typography>;
+            return <Typography>x64</Typography>;
         case "HTML5":
             return (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
