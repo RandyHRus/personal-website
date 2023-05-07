@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import store from "@/state/reduxState";
 import { AnimatePresence, motion } from "framer-motion";
-import ProjectCardPopup from "@/components/projectCardPopup";
+import ProjectCardPopup, { Page } from "@/components/projectCardPopup";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
 
 interface Project {
     id: string;
     title: string;
-    videoLink: string | null;
     mainImage: string;
-    additionalImages: string[] | null;
-    description: string;
+    pages: Page[];
     technologies: string[] | null;
 }
 
@@ -20,36 +18,139 @@ const featuredProjects: Project[] = [
     {
         id: "1",
         title: "Compiler",
-        videoLink: null,
         mainImage: "/images/compiler/compiler.png",
-        additionalImages: null,
-        description: "This is the description for Project 1",
+        pages: [
+            {
+                text: `This compiler takes the Exprs-lang programming language (a fictional language) and converts it into x64 machine code. It utilizes a sequence of passes to translate the source language to the target language, progressing all the way to x64.\n
+             Each pass introduces a new feature that refines the capabilities of the target language. These passes cover a range of tasks, such as abstract variable declaration, register allocation, frame allocation, the inclusion of function calls and return values, the introduction of data types, support for algebraic expressions, the incorporation of if statements and control flows, a series of optimizations, etc.`,
+                media: { type: "img", path: "/images/compiler/compiler.png" },
+            },
+        ],
         technologies: ["Racket", "x86-64"],
     },
     {
         id: "2",
         title: "Resort management game",
-        videoLink: "https://www.youtube-nocookie.com/embed/2UwR6k8FrHo",
         mainImage: "/images/resorto/resorto1.png",
-        additionalImages: [
-            "/images/resorto/resorto2.png",
-            "/images/resorto/resorto3.png",
-            "/images/resorto/resorto4.png",
+        pages: [
+            {
+                text: `This is a resort management game I created. 
+                You play as a resort manager in charge of attracting tourists to a deserted island.\n
+                Click through the tabs on the left to read more on the game and watch videos.`,
+
+                media: {
+                    type: "img",
+                    path: "/images/resorto/resorto1.png",
+                },
+                additionalMedia: [
+                    "/images/resorto/resorto2.png",
+                    "/images/resorto/resorto3.png",
+                    "/images/resorto/resorto4.png",
+                ],
+            },
+            {
+                text: `The island terrain is generated randomly using Perlin noise, with the darker areas of the noise representing hills and mountains and white areas representing the ocean.\n
+                The game uses a 2D array to store tile information like terrain, terrain height, zone, and structures on the tile. The player has the ability to modify the terrain and place structures.`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/2UwR6k8FrHo",
+                }, // perlin noise source: https://gfycat.com/aggravatingthosearieltoucan
+                additionalMedia: [
+                    "/images/resorto/perlinNoise.gif",
+                    "/images/resorto/island2.png",
+                    "/images/resorto/island3.png",
+                ],
+            },
+            {
+                text: `The game includes a variety of objects to place on the island.\n
+                There are furnitures, like tables, chairs, shelves, and carpets.\n
+                Lights can be used to light up areas at night.\n
+                Trees and plants can be used to decorate the island.`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/nH0NGtH4Ijc",
+                },
+            },
+            {
+                text: `Docks can be placed on the water to create walkable platforms.\n`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/GSKX2hoDvU4",
+                },
+            },
+            {
+                text: `The game includes UIs to manage the state of the island and view information.\n
+                The player can gather information like how happy the tourists are.\n
+                The player has an inventory to store items. Items can be moved around the inventory slots smoothly, and can also be moved to storages.\n
+                The player can customize their looks using the character customization menu, and cosmetic items like hats.`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/M_kbjCvs5j0",
+                },
+                additionalMedia: [
+                    "/images/resorto/Inventory.png",
+                    "/images/resorto/TouristsList.png",
+                    "/images/resorto/ColorWheel.png",
+                ],
+            },
+            {
+                text: `The tourists move around the island using A* pathfinding.\n
+                When a tourist decides where they want to go, the shortest path to the destination will be calculated while avoiding terrain, water, and obstacles.\n`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/QfkvR2-PaTg",
+                },
+            },
+            {
+                text: `The player can create zones around the island to dedicate spaces for certain activities. For example, if a fishing zone is created, the tourists will only go to that zone to fish.\n`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/QC4spd8WX-k",
+                },
+            },
+            {
+                text: `Fish randomly spawns around the ocean. The player and tourists can take part in fishing.\n
+                The fishing line animation is created using Bezier curves. The 3 points of the curve changes during different parts of the animation to create a natural-looking casting animation.\n
+                The fishing line can be charged to cast farther and can be cast in different directions. And the bezier line renderer will change the rendering accordingly.`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/4MtmiCCbXwQ",
+                },
+                additionalMedia: ["/images/resorto/resorto4.png"],
+            },
+            {
+                text: `Each tourist will have different schedules. Like what time they go to bed, what day they leave the island, or when they eat.\n
+                A clock event system is set up so that it can be subscribed and unsubscribed to.\n
+                Tourists could subscribe to any given time, such as 7:32pm. And when that time is reached, all subscribers (tourists in this case) 
+                of that time will be notified that the time has reached, and they will start doing their scheduled activities.`,
+                media: {
+                    type: "img",
+                    path: "/images/resorto/Bed.png",
+                },
+            },
         ],
-        description: "This is the description for Project 2",
         technologies: ["Unity", "C#"],
     },
     {
         id: "5",
         title: "Machine learning algorithms",
-        videoLink: null,
         mainImage: "/images/ml/logRegGaussian.png",
-        additionalImages: [
-            "/images/ml/KNN.png",
-            "/images/ml/kmeans_50.png",
-            "/images/ml/robustLinearRegression.png",
+        pages: [
+            {
+                text: `I have gained proficiency in implementing machine learning algorithms utilising Python and popular libraries such as Numpy and Pandas. \n
+                During this process, we focused on writing the algorithms from scratch, without relying on frameworks like Tensorflow or PyTorch.\n
+                Some algorithms implemented include k-means, k-nearest-neighbours, linear regression, logistic regression, naive Bayes, principal component analysis, stochastic gradient descent, and random forests.`,
+                media: {
+                    type: "img",
+                    path: "/images/ml/logRegGaussian.png",
+                },
+                additionalMedia: [
+                    "/images/ml/KNN.png",
+                    "/images/ml/kmeans_50.png",
+                    "/images/ml/robustLinearRegression.png",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
         technologies: ["Python", "NumPy", "Pandas"],
     },
 ];
@@ -58,49 +159,82 @@ const otherProjects: Project[] = [
     {
         id: "10",
         title: "Aquarium live wallpaper",
-        videoLink: "https://www.youtube-nocookie.com/embed/qZtw3N-nGwg",
         mainImage: "/images/aquarium/aquarium4.png",
-        additionalImages: [
-            "/images/aquarium/aquarium4.png",
-            "/images/aquarium/aquarium3.png",
-            "/images/aquarium/aquarium1.png",
+        pages: [
+            {
+                text: "This is an android app that can turn your home and lock screen background into a aquarium themed live wallpaper. It was created using Unity, C#, Android Studio, and Gimp (for graphics).\n",
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/qZtw3N-nGwg",
+                },
+                additionalMedia: [
+                    "/images/aquarium/aquarium4.png",
+                    "/images/aquarium/aquarium3.png",
+                    "/images/aquarium/aquarium1.png",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
         technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
         id: "4",
         title: "Mail server",
-        videoLink: null,
+        pages: [
+            {
+                text: `Mail servers that utilise SMTP (Simple mail transfer protocol) and POP3 (Post office protocol).\n
+                Clients are able to connect to the SMTP server to compose and send mail.\n
+                Clients can connect to the POP3 server to retrieve incoming mail.\n
+                The POP3 server includes a client authentication feature to verify user identity.`,
+                media: { type: "img", path: "/images/mail/smtp.png" },
+            },
+        ],
         mainImage: "/images/mail/smtp.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
         technologies: ["C"],
     },
     {
         id: "6",
         title: "Star farm",
-        videoLink: null,
-        mainImage: "/images/starfarm/starFarm1.png",
-        additionalImages: [
-            "images/starfarm/starFarm2.png",
-            "images/starfarm/starFarm3.png",
-            "images/starfarm/starFarm4.png",
+        pages: [
+            {
+                text: `Game my team and I created during my time at the UBC game development club. Winning "Best Gameplay" and "Best game overall" awards.\n
+                For more info and a download link, visit: https://www.ubcgamedev.com/star-farm`,
+                media: { type: "img", path: "/images/starfarm/starFarm1.png" },
+                additionalMedia: [
+                    "images/starfarm/starFarm2.png",
+                    "images/starfarm/starFarm3.png",
+                    "images/starfarm/starFarm4.png",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
+        mainImage: "/images/starfarm/starFarm1.png",
         technologies: ["Unity", "C#"],
     },
     {
         id: "7",
         title: "Product management app",
-        videoLink: null,
-        mainImage: "/images/product/product1.png",
-        additionalImages: [
-            "images/product/product2.png",
-            "images/product/product3.png",
-            "images/product/product4.png",
+        pages: [
+            {
+                text: `A full-stack web application for managing products being worked on by the BC government.\n
+                Backend was built using Node.js with Express.js. REST API is used to get/create/update/delete products from data stored in the backend.\n
+                Frontend was built using Next.js and React.js. The frontend utilizes the api to get/create/update/delete products.\n
+                Click through the tabs on the left for more details on the app.`,
+                media: { type: "img", path: "/images/product/product1.png" },
+            },
+            {
+                text: `Users can add/edit/delete products using the interface. If they try to save a product with invalid fields, they will be notified with an error.\n
+                If all form fields are filled in correctly and you hit "save", the new product will be added to the server, and changes will be displayed immediately`,
+                media: { type: "img", path: "/images/product/product2.png" },
+            },
+            {
+                text: "Users can search through the products by filtering through fields.",
+                media: { type: "img", path: "/images/product/product3.png" },
+            },
+            {
+                text: "The application includes a comprehensive API documentation created using Swagger.js",
+                media: { type: "img", path: "/images/product/product4.png" },
+            },
         ],
-        description: "This is the description for Project 2",
+        mainImage: "/images/product/product1.png",
         technologies: [
             "React",
             "Next.js",
@@ -108,47 +242,69 @@ const otherProjects: Project[] = [
             "JavaScript",
             "CSS3",
             "Express.js",
+            "Node.js",
             "Material-ui",
         ],
     },
     {
         id: "8",
         title: "Pinball",
-        videoLink: null,
+        pages: [
+            {
+                text: `A JavaScript game made using Matter.js 2D physics library. \n
+                Games I made using Unity is much better but I thought I'd try learning how to make a simple game that runs on a browser.`,
+                media: { type: "img", path: "/images/pinball/pinball1.png" },
+            },
+        ],
         mainImage: "/images/pinball/pinball1.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
         technologies: ["JavaScript", "HTML5", "CSS3"],
     },
     {
         id: "17",
         title: "Hoppy frog",
-        videoLink: "https://www.youtube-nocookie.com/embed/4ACAoIvRd78",
-        mainImage: "/images/frog/frog1.jpg",
-        additionalImages: [
-            "/images/frog/frog1.jpg",
-            "/images/frog/frog2.png",
-            "/images/frog/frog3.jpeg",
+        pages: [
+            {
+                text: "Casual phone game where you hop a frog on to lily pads while trying not to fall. Made with Unity, C#, and Gimp (For artwork).",
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/4ACAoIvRd78",
+                },
+                additionalMedia: [
+                    "/images/frog/frog1.jpg",
+                    "/images/frog/frog2.png",
+                    "/images/frog/frog3.jpeg",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
+        mainImage: "/images/frog/frog1.jpg",
         technologies: ["Unity", "C#"],
     },
     {
         id: "13",
         title: "DNS resolver",
-        videoLink: null,
+        pages: [
+            {
+                text: `DNS resolver to resolve DNS names using iterative queries.\n
+                The app will first query the root name servers to find info about the top-level domain servers.\n
+                After that, it will iteratively query other name servers to find the ip address of the requested domain.`,
+                media: { type: "img", path: "/images/dns/dns.png" },
+            },
+        ],
         mainImage: "/images/dns/dns.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
         technologies: ["Java"],
     },
     {
         id: "3",
         title: "Piano app",
-        videoLink: null,
+        pages: [
+            {
+                text: `A react native application that displays keys being played on a piano.\n
+                The piano contains a raspberry pi running a python application that records keys being pressed and a Node.js server that receives the key presses.\n
+                The app communicates with the Node.js server using WebSocket to receive information to display on the screen.`,
+                media: { type: "img", path: "/images/piano/piano.jpg" },
+            },
+        ],
         mainImage: "/images/piano/piano.jpg",
-        additionalImages: null,
-        description: "This is the description for Project 2",
         technologies: [
             "React",
             "TypeScript",
@@ -156,75 +312,126 @@ const otherProjects: Project[] = [
             "Python",
             "AndroidStudio",
             "RaspberryPi",
+            "Node.js",
         ],
     },
     {
         id: "9",
         title: "Cellular automata",
-        videoLink: null,
-        mainImage: "/images/cells/cell3.png",
-        additionalImages: [
-            "/images/cells/cell2.png",
-            "/images/cells/cell3.png",
-            "/images/cells/cell4.png",
+        pages: [
+            {
+                text: `In Conway's game of life, a cell can be either dead or alive, and its next state is determined by how many cells are alive in its 8 neighbouring cells. 
+                In this cellular automata simulator I created in C#, a cell can take in any float between 0 and 1, and the value to be added or subtracted depends on how many neighbours are alive.\n
+                Rules can be created to either add or subtract some value from the cells depending on how many neighbouring cells are alive. Which neighbours to check can also be configured.\n
+                Go to next page for more info.`,
+                media: { type: "img", path: "/images/cells/cell3.png" },
+                additionalMedia: [
+                    "/images/cells/cell3.png",
+                    "/images/cells/cell4.png",
+                ],
+            },
+            {
+                text: `I also created a React app to configure rules. The neighbours and the color can be configured in the UI. The color of 
+                cells can be configured to be a gradient, such that the cell's value (between 0 and 1) corresponds to a certain gradient value,
+                and the simulator will show that color for that cell. The rule can be exported to json and loaded into the simulator.`,
+                media: { type: "img", path: "/images/cells/cell2.png" },
+            },
         ],
-        description: "This is the description for Project 2",
-        technologies: ["Unity", "C#"],
+        mainImage: "/images/cells/cell3.png",
+        technologies: ["Unity", "C#", "React", "Material-ui", "TypeScript"],
     },
     {
         id: "11",
         title: "Space live wallpaper",
-        videoLink: "https://www.youtube-nocookie.com/embed/eLy7Q9HsUw4",
-        mainImage: "/images/space/space1.png",
-        additionalImages: [
-            "images/space/space2.png",
-            "images/space/space3.png",
-            "images/space/space4.png",
+        pages: [
+            {
+                text: `This is an android app that can turn your home and lock screen background into a space themed live wallpaper. It was created using Unity, C#, Android Studio, and Gimp (for graphics).\n
+                The app reached 1800 downloads on Google play store.`,
+                media: {
+                    type: "video",
+                    path: "https://www.youtube-nocookie.com/embed/eLy7Q9HsUw4",
+                },
+                additionalMedia: [
+                    "images/space/space2.png",
+                    "images/space/space3.png",
+                    "images/space/space4.png",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
+        mainImage: "/images/space/space1.png",
         technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
         id: "12",
         title: "Course query app",
-        videoLink: null,
-        mainImage: "/images//query/query1.png",
-        additionalImages: [
-            "images/query/query2.png",
-            "images/query/query3.png",
+        pages: [
+            {
+                text: `This is a full-stack application that is used to query UBC courses that match query fields.\n
+                The front-end is used to select query fields. Some fields include course title, department, how many students passed, name of instructor, etc. Look at the picture to the right for a more comprehensive view of the fields.\n
+                Go to next page for more info.`,
+                media: { type: "img", path: "/images//query/query1.png" },
+            },
+            {
+                text: `The selected fields are used to construct a query tree.\n
+                The front-end sends a GET request to the backend API with the constructed query tree.\n
+                The backend finds the matching courses from the database and sends the matching courses as a response.\n
+                The UI will then display the courses that match the query.`,
+                media: { type: "img", path: "images/query/query2.png" },
+            },
         ],
-        description: "This is the description for Project 2",
-        technologies: ["TypeScript"],
+        mainImage: "/images//query/query1.png",
+        technologies: ["TypeScript", "Node.js"],
     },
     {
         id: "14",
         title: "Battlesnake",
-        videoLink: null,
+        pages: [
+            {
+                text: `Snake algorithm that I created for the battlesnake coding competition. \n
+                Battlesnake is similar to the classic snake game but with other players, and you code your Snake's AI.\n
+                At the start of each turn, the battlesnake API is used to retrieve the current state of the board like where other players' snakes are.\n
+                Using the board information, my algorithm finds the best next move for my snake to take, and sends the move to their server.`,
+                media: {
+                    type: "img",
+                    path: "/images/battlesnake/battlesnake.png",
+                },
+            },
+        ],
         mainImage: "/images/battlesnake/battlesnake.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
-        technologies: ["JavaScript"],
+        technologies: ["JavaScript", "Node.js"],
     },
     {
         id: "16",
         title: "Robotics",
-        videoLink: null,
-        mainImage: "/images/robotics/robot3.jpeg",
-        additionalImages: [
-            "images/robotics/robot1.jpeg",
-            "images/robotics/robot2.jpeg",
-            "images/robotics/robot4.jpeg",
+        pages: [
+            {
+                text: `I was part of a team that created underwater robots to complete a variety of tasks.\n
+                The robot was equipped with a variety of tools like cameras, an arm that was used to grab objects, and a laser to measure distance.\n
+                The motors and tools were controlled using a raspberry pi controller on the surface, which sent data to the arduino equipped on the robot connected to all of the actuators.`,
+                media: { type: "img", path: "/images/robotics/robot3.jpeg" },
+                additionalMedia: [
+                    "images/robotics/robot1.jpeg",
+                    "images/robotics/robot2.jpeg",
+                    "images/robotics/robot4.jpeg",
+                ],
+            },
         ],
-        description: "This is the description for Project 2",
-        technologies: ["RaspberryPi"],
+        mainImage: "/images/robotics/robot3.jpeg",
+        technologies: ["RaspberryPi", "Arduino"],
     },
     {
         id: "15",
         title: "Personal website",
-        videoLink: null,
+        pages: [
+            {
+                text: "This website was created using a variety of JavaScript frameworks.",
+                media: {
+                    type: "img",
+                    path: "/images/website/personal-website.png",
+                },
+            },
+        ],
         mainImage: "/images/website/personal-website.png",
-        additionalImages: null,
-        description: "This is the description for Project 2",
         technologies: [
             "React",
             "Next.js",
@@ -325,46 +532,31 @@ export default function ProjectsSection() {
                 </div>
             </div>
             {/** Pop up*/}
-            <AnimatePresence>
-                {selectedProject && (
-                    <div>
-                        <div className="fixed flex flex-col items-center justify-center left-0 right-0 top-0 bottom-0 z-50">
-                            {/**fade background */}
-                            <motion.div
-                                className="fixed flex left-0 right-0 top-0 bottom-0 z-10 bg-tertiary opacity-20"
-                                onClick={() => setSelectedProject(null)}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 0.75 }}
-                                exit={{ opacity: 0 }}
-                            />
-                            <motion.div
-                                id="projectMotionDiv"
-                                className=" w-2/3 h-2/3 z-30"
-                                layoutId={selectedProject.id}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <ProjectCardPopup
-                                    title={selectedProject.title}
-                                    additionalImgPaths={
-                                        selectedProject.additionalImages
-                                    }
-                                    text={[selectedProject.description]}
-                                    projectLink={""}
-                                    technologies={selectedProject.technologies}
-                                    main={{
-                                        type: selectedProject.videoLink
-                                            ? "video"
-                                            : "img",
-                                        path: selectedProject.videoLink
-                                            ? selectedProject.videoLink
-                                            : selectedProject.mainImage,
-                                    }}
-                                />
-                            </motion.div>
-                        </div>
-                    </div>
-                )}
-            </AnimatePresence>
+            {selectedProject && (
+                <div className="fixed flex flex-col items-center justify-center left-0 right-0 top-0 bottom-0 z-50">
+                    {/**fade background */}
+                    <motion.div
+                        className="fixed flex left-0 right-0 top-0 bottom-0 z-10 bg-tertiary opacity-20"
+                        onClick={() => setSelectedProject(null)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.75 }}
+                        exit={{ opacity: 0 }}
+                    />
+                    <motion.div
+                        id="projectMotionDiv"
+                        className=" w-2/3 h-2/3 z-30"
+                        layoutId={selectedProject.id}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <ProjectCardPopup
+                            title={selectedProject.title}
+                            projectLink={""}
+                            technologies={selectedProject.technologies}
+                            pages={selectedProject.pages}
+                        />
+                    </motion.div>
+                </div>
+            )}
         </Provider>
     );
 }

@@ -4,85 +4,63 @@ import {
     CardContent,
     CardMedia,
     IconButton,
+    Tab,
+    Tabs,
     Typography,
 } from "@mui/material";
 import { Component, useState } from "react";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { DevIcon } from "@/icons/devicons";
+
+export interface Page {
+    text: string;
+    media: { type: "img"; path: string } | { type: "video"; path: string };
+    additionalMedia?: string[];
+}
 
 interface Props {
     title: string;
-    main: { type: "img" | "video"; path: string };
-    additionalImgPaths: string[] | null;
-    text: string[];
+    pages: Page[];
     projectLink: string;
     technologies: string[] | null;
 }
 
 export default function ProjectCardPopup(props: Props) {
-    const [textIndex, setTextIndex] = useState(0);
-
-    const handleBack = () => {
-        setTextIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
-    };
-
-    const handleForward = () => {
-        setTextIndex((prevIndex) =>
-            prevIndex < props.text.length - 1 ? prevIndex + 1 : prevIndex
-        );
-    };
+    const [selectedTab, setSelectedTab] = useState<number>(0);
 
     return (
         <Card className="flex flex-row h-full shadow-xl rounded-lg bg-grey">
-            {/** Picture area */}
-            <div className="w-3/5 flex h-full">
-                <div className="flex flex-col h-full ">
-                    {/** Main image or video */}
-                    <div className="flex w-full flex-grow max-h-full ">
-                        {props.main.type == "img" && (
-                            <CardMedia
-                                className="flex w-full h-full border border-grey rounded-lg "
-                                component="img"
-                                image={props.main.path}
-                                title="My Card Image"
-                            />
-                        )}
-                        {props.main.type == "video" && (
-                            <CardMedia
-                                className="flex w-full h-full border border-grey rounded-lg "
-                                component="iframe"
-                                src={props.main.path}
-                            />
-                        )}
-                    </div>
-                    {/** additonal images */}
-                    {props.additionalImgPaths && (
-                        <div className="flex flex-row h-1/4">
-                            {props.additionalImgPaths.map((path, index) => (
-                                <div
-                                    className="flex flex-row w-1/3"
-                                    key={index}
-                                >
-                                    <CardMedia
-                                        className="flex w-full h-full  border border-grey rounded-lg"
-                                        component="img"
-                                        image={path}
-                                        title="My Card Image"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
+            <Tabs
+                orientation="vertical"
+                variant="scrollable"
+                value={selectedTab} // Set the active tab index here
+                className=" bg-grey"
+                classes={{
+                    indicator: "bg-primary", // Customize the indicator color here
+                }}
+                sx={{ borderRight: 1, borderColor: "divider" }}
+                aria-label="Vertical tabs"
+                style={{ position: "relative", left: 0 }} // Position the tabs on the right
+            >
+                {props.pages.map((page: Page, index: number) => (
+                    <Tab
+                        key={index}
+                        classes={{
+                            selected: "text-primary",
+                        }}
+                        label={"Page " + (index + 1)}
+                        onClick={() => setSelectedTab(index)}
+                    />
+                ))}
+            </Tabs>
             {/** Text area */}
             <CardContent className="w-2/5 p-4 flex flex-col justify-between">
                 <div className="h-5/6">
-                    <Typography variant="h5" component="h2">
-                        {props.title}
-                    </Typography>
-                    <Typography variant="body2" component="p" className="mt-4">
-                        {props.text[textIndex]}
+                    <Typography className="text-2xl">{props.title}</Typography>
+                    <Typography
+                        className="mt-4 text-sm"
+                        style={{ whiteSpace: "pre-line" }}
+                    >
+                        {props.pages[selectedTab].text}
                     </Typography>
                 </div>
                 <div className="h-1/6 justify-center flex flex-row flex-wrap">
@@ -92,15 +70,58 @@ export default function ProjectCardPopup(props: Props) {
                         </div>
                     ))}
                 </div>
-                <div className="flex justify-between mt-8 ">
-                    <IconButton aria-label="back" onClick={handleBack}>
-                        <ArrowBackIos />
-                    </IconButton>
-                    <IconButton aria-label="forward" onClick={handleForward}>
-                        <ArrowForwardIos />
-                    </IconButton>
-                </div>
             </CardContent>
+            {/** Picture area */}
+            <div className="w-3/5 flex h-full">
+                <div className="flex flex-col w-full h-full ">
+                    {/** Main image or video */}
+                    <div
+                        className="flex w-full"
+                        style={{
+                            height:
+                                props.pages[selectedTab].additionalMedia ==
+                                undefined
+                                    ? "100%"
+                                    : "75%",
+                        }}
+                    >
+                        {props.pages[selectedTab].media.type == "img" && (
+                            <CardMedia
+                                className="flex w-full h-full border border-grey rounded-lg "
+                                component="img"
+                                image={props.pages[selectedTab].media.path}
+                                title="My Card Image"
+                            />
+                        )}
+                        {props.pages[selectedTab].media.type == "video" && (
+                            <CardMedia
+                                className="flex w-full h-full border border-grey rounded-lg "
+                                component="iframe"
+                                src={props.pages[selectedTab].media.path}
+                            />
+                        )}
+                    </div>
+                    {props.pages[selectedTab].additionalMedia != undefined && (
+                        <div className="flex flex-row h-1/4">
+                            {props.pages[selectedTab].additionalMedia?.map(
+                                (path: string, index: number) => (
+                                    <div
+                                        className="flex flex-row w-1/3 "
+                                        key={index}
+                                    >
+                                        <CardMedia
+                                            className="flex w-full h-full  border border-grey rounded-lg"
+                                            component="img"
+                                            image={path}
+                                            title="My Card Image"
+                                        />
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
         </Card>
     );
 }
