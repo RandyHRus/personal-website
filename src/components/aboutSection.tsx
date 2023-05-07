@@ -15,11 +15,18 @@ export default function AboutSection() {
             </Typography>
             <div className=" flex items-center h-full justify-center ">
                 <Typography className="text-white text-center text-xl w-1/3 ">
-                    Hi, I'm Randy. I'm a software developer with a B.SC in
+                    Hi, I'm Randy. I'm a software developer and I hold a B.Sc in
                     Computer Science from the University of British Columbia.
                     <br />
-                    <br />I have experience with full-stack web development,
-                    game development, and desktop application development.
+                    <br />
+                    At SAP, I worked as a co-op full-stack web developer. I
+                    helped develop a data wrangling microservice.
+                    <br />
+                    <br />
+                    At Delta-Q Technologies, I worked as a co-op application
+                    developer. I developed desktop applications for battery
+                    chargers used in electric vehicles.
+                    <br />
                 </Typography>
             </div>
         </div>
