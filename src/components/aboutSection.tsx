@@ -13,10 +13,11 @@ export default function AboutSection() {
             <Typography variant="h1" className="text-white text-center">
                 About
             </Typography>
-            <div className=" flex items-center h-full justify-center ">
+            <div className=" flex m-10 h-full justify-center ">
                 <Typography className="text-white text-center text-xl w-1/3 ">
-                    Hi, I'm Randy. I'm a software developer and I hold a B.Sc in
-                    Computer Science from the University of British Columbia.
+                    Hi, I&apos;m Randy. I&apos;m a software developer and I hold
+                    a B.Sc in Computer Science from the University of British
+                    Columbia.
                     <br />
                     <br />
                     At SAP, I worked as a co-op full-stack web developer. I
