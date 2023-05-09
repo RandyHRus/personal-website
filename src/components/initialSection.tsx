@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import OfficeScene from "./officeScene";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LiquidScene from "./liquidScene";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
@@ -11,9 +12,9 @@ function InitialSection(props: any) {
     return (
         <div id="initial" className="relative flex flex-col w-screen h-screen">
             {/* 3JS scene */}
-            <OfficeScene />
+            <LiquidScene />
             {/* This is a gradient to make the text easier to read */}
-            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-quaternary to-transparent opacity-60 z-40" />
+            <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-quaternary to-transparent opacity-40 z-40" />
             {/* UI content middle */}
             <AnimatePresence>
                 <motion.div
