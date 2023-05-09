@@ -16,7 +16,7 @@ interface Project {
 
 const featuredProjects: Project[] = [
     {
-        id: "1",
+        id: "compiler",
         title: "Compiler",
         mainImage: "/images/compiler/compiler.png",
         pages: [
@@ -29,7 +29,7 @@ const featuredProjects: Project[] = [
         technologies: ["Racket", "x86-64"],
     },
     {
-        id: "2",
+        id: "resorto",
         title: "Resort management game",
         mainImage: "/images/resorto/resorto1.png",
         pages: [
@@ -132,7 +132,7 @@ const featuredProjects: Project[] = [
         technologies: ["Unity", "C#"],
     },
     {
-        id: "5",
+        id: "ml",
         title: "Machine learning algorithms",
         mainImage: "/images/ml/logRegGaussian.png",
         pages: [
@@ -157,7 +157,7 @@ const featuredProjects: Project[] = [
 
 const otherProjects: Project[] = [
     {
-        id: "10",
+        id: "aquariumLiveWallpaper",
         title: "Aquarium live wallpaper",
         mainImage: "/images/aquarium/aquarium4.png",
         pages: [
@@ -177,7 +177,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
-        id: "4",
+        id: "mail",
         title: "Mail server",
         pages: [
             {
@@ -192,7 +192,7 @@ const otherProjects: Project[] = [
         technologies: ["C"],
     },
     {
-        id: "6",
+        id: "starFarm",
         title: "Star farm",
         pages: [
             {
@@ -210,7 +210,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#"],
     },
     {
-        id: "7",
+        id: "productManagementApp",
         title: "Product management app",
         pages: [
             {
@@ -247,7 +247,7 @@ const otherProjects: Project[] = [
         ],
     },
     {
-        id: "8",
+        id: "pinball",
         title: "Pinball",
         pages: [
             {
@@ -260,7 +260,7 @@ const otherProjects: Project[] = [
         technologies: ["JavaScript", "HTML5", "CSS3"],
     },
     {
-        id: "17",
+        id: "frog",
         title: "Hoppy frog",
         pages: [
             {
@@ -280,7 +280,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#"],
     },
     {
-        id: "13",
+        id: "dns",
         title: "DNS resolver",
         pages: [
             {
@@ -294,7 +294,7 @@ const otherProjects: Project[] = [
         technologies: ["Java"],
     },
     {
-        id: "3",
+        id: "piano",
         title: "Piano app",
         pages: [
             {
@@ -316,7 +316,7 @@ const otherProjects: Project[] = [
         ],
     },
     {
-        id: "9",
+        id: "cellularAutomata",
         title: "Cellular automata",
         pages: [
             {
@@ -341,7 +341,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#", "React", "Material-ui", "TypeScript"],
     },
     {
-        id: "11",
+        id: "spaceLiveWallpaper",
         title: "Space live wallpaper",
         pages: [
             {
@@ -362,7 +362,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
-        id: "12",
+        id: "courseQueryApp",
         title: "Course query app",
         pages: [
             {
@@ -383,7 +383,7 @@ const otherProjects: Project[] = [
         technologies: ["TypeScript", "Node.js"],
     },
     {
-        id: "14",
+        id: "battlesnake",
         title: "Battlesnake",
         pages: [
             {
@@ -401,7 +401,7 @@ const otherProjects: Project[] = [
         technologies: ["JavaScript", "Node.js"],
     },
     {
-        id: "16",
+        id: "robotics",
         title: "Robotics",
         pages: [
             {
@@ -420,7 +420,7 @@ const otherProjects: Project[] = [
         technologies: ["RaspberryPi", "Arduino"],
     },
     {
-        id: "15",
+        id: "personalWebsite",
         title: "Personal website",
         pages: [
             {
@@ -473,9 +473,20 @@ const TextAnimation = (props: { text: string }) => {
     );
 };
 
-export default function ProjectsSection() {
+export default function ProjectsSection(props: { projectId?: string }) {
+    // construct a dictionary of project id to project
+    const projectsDict: { [key: string]: Project } = {};
+    featuredProjects.forEach((project) => {
+        projectsDict[project.id] = project;
+    });
+    otherProjects.forEach((project) => {
+        projectsDict[project.id] = project;
+    });
+
     const [selectedProject, setSelectedProject] = useState<Project | null>(
-        null
+        props.projectId && projectsDict[props.projectId]
+            ? projectsDict[props.projectId]
+            : null
     );
 
     const ProjectCardsList = (props: { projects: Project[] }) => {

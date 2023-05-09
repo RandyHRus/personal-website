@@ -7,7 +7,7 @@ import AboutSection from "@/components/aboutSection";
 import InitialSection from "@/components/initialSection";
 import Stripe from "@/components/stripe";
 
-export default function Home() {
+export default function Home(props: { projectId?: string }) {
     return (
         <div style={{ position: "relative" }} id="root">
             <Provider store={store}>
@@ -20,7 +20,7 @@ export default function Home() {
                 />
                 <AboutSection />
                 <Stripe />
-                <ProjectsSection />
+                <ProjectsSection projectId={props.projectId} />
                 <Stripe />
                 <ContactSection />
             </Provider>
