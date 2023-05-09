@@ -210,7 +210,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#"],
     },
     {
-        id: "productManagementApp",
+        id: "product",
         title: "Product management app",
         pages: [
             {
@@ -362,7 +362,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#", "AndroidStudio"],
     },
     {
-        id: "courseQueryApp",
+        id: "course",
         title: "Course query app",
         pages: [
             {
