@@ -33,7 +33,7 @@ export default function ProjectCardPopup(props: Props) {
                 orientation="vertical"
                 variant="scrollable"
                 value={selectedTab} // Set the active tab index here
-                className=" bg-grey"
+                className=" bg-grey min-w-min"
                 classes={{
                     indicator: "bg-primary", // Customize the indicator color here
                 }}
