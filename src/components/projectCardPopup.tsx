@@ -53,22 +53,25 @@ export default function ProjectCardPopup(props: Props) {
                 ))}
             </Tabs>
             {/** Text area */}
-            <CardContent className="w-2/5 p-4 flex flex-col justify-between">
-                <div className="h-5/6">
+            <CardContent className="w-2/5 p-4 flex flex-col justify-between h-full">
+                <div className="h-full">
+                    {/** Title */}
                     <Typography className="text-2xl">{props.title}</Typography>
+                    {/** Icons */}
+                    <div className="p-4 justify-center flex flex-row flex-wrap">
+                        {props.technologies?.map((tech, index) => (
+                            <div key={index} className="w-12 h-12 p-2">
+                                <DevIcon iconName={tech}></DevIcon>
+                            </div>
+                        ))}
+                    </div>
+                    {/** Description */}
                     <Typography
-                        className="mt-4 text-sm"
+                        className="text-sm"
                         style={{ whiteSpace: "pre-line" }}
                     >
                         {props.pages[selectedTab].text}
                     </Typography>
-                </div>
-                <div className="h-1/6 justify-center flex flex-row flex-wrap">
-                    {props.technologies?.map((tech, index) => (
-                        <div key={index} className="w-12 h-12 p-2">
-                            <DevIcon iconName={tech}></DevIcon>
-                        </div>
-                    ))}
                 </div>
             </CardContent>
             {/** Picture area */}

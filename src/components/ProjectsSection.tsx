@@ -555,7 +555,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     />
                     <motion.div
                         id="projectMotionDiv"
-                        className=" w-2/3 h-2/3 z-30"
+                        className=" w-4/5 h-4/5 z-30"
                         layoutId={selectedProject.id}
                         transition={{ duration: 0.3 }}
                     >
