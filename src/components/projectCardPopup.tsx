@@ -52,9 +52,9 @@ export default function ProjectCardPopup(props: Props) {
                     />
                 ))}
             </Tabs>
-            {/** Text area */}
             <CardContent className="p-4 flex lg:flex-row flex-col justify-between h-full w-full">
-                <div className="lg:w-2/5 w-full flex flex-col lg:h-full h-2/5">
+                {/** Text area */}
+                <div className="lg:w-2/5 w-full flex flex-col lg:h-full h-full">
                     {/** Title */}
                     <Typography className="text-2xl">{props.title}</Typography>
                     {/** Icons */}
@@ -78,11 +78,11 @@ export default function ProjectCardPopup(props: Props) {
                     <div className="flex lg:flex-col flex-row w-full h-full">
                         {/** Main image or video */}
                         <div
-                            className={`flex lg:w-full w-1/2 ${
+                            className={`flex ${
                                 props.pages[selectedTab].additionalMedia ==
                                 undefined
-                                    ? "h-full"
-                                    : "lg:h-3/4 h-full"
+                                    ? "h-full w-full"
+                                    : "lg:h-3/4 h-full lg:w-1/2 w-full"
                             }`}
                         >
                             {props.pages[selectedTab].media.type == "img" && (
