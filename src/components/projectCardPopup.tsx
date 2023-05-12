@@ -53,8 +53,8 @@ export default function ProjectCardPopup(props: Props) {
                 ))}
             </Tabs>
             {/** Text area */}
-            <CardContent className="w-2/5 p-4 flex flex-col justify-between h-full">
-                <div className="h-full">
+            <CardContent className="p-4 flex flex-row justify-between h-full w-full">
+                <div className="w-2/5 flex flex-col h-full">
                     {/** Title */}
                     <Typography className="text-2xl">{props.title}</Typography>
                     {/** Icons */}
@@ -73,58 +73,59 @@ export default function ProjectCardPopup(props: Props) {
                         {props.pages[selectedTab].text}
                     </Typography>
                 </div>
-            </CardContent>
-            {/** Picture area */}
-            <div className="w-3/5 flex h-full">
-                <div className="flex flex-col w-full h-full ">
-                    {/** Main image or video */}
-                    <div
-                        className="flex w-full"
-                        style={{
-                            height:
-                                props.pages[selectedTab].additionalMedia ==
-                                undefined
-                                    ? "100%"
-                                    : "75%",
-                        }}
-                    >
-                        {props.pages[selectedTab].media.type == "img" && (
-                            <CardMedia
-                                className="flex w-full h-full border border-grey rounded-lg "
-                                component="img"
-                                image={props.pages[selectedTab].media.path}
-                                title="My Card Image"
-                            />
-                        )}
-                        {props.pages[selectedTab].media.type == "video" && (
-                            <CardMedia
-                                className="flex w-full h-full border border-grey rounded-lg "
-                                component="iframe"
-                                src={props.pages[selectedTab].media.path}
-                            />
-                        )}
-                    </div>
-                    {props.pages[selectedTab].additionalMedia != undefined && (
-                        <div className="flex flex-row h-1/4">
-                            {props.pages[selectedTab].additionalMedia?.map(
-                                (path: string, index: number) => (
-                                    <div
-                                        className="flex flex-row w-1/3 "
-                                        key={index}
-                                    >
-                                        <CardMedia
-                                            className="flex w-full h-full  border border-grey rounded-lg"
-                                            component="img"
-                                            image={path}
-                                            title="My Card Image"
-                                        />
-                                    </div>
-                                )
+                {/** Picture area */}
+                <div className="w-3/5 flex h-full">
+                    <div className="flex flex-col w-full h-full ">
+                        {/** Main image or video */}
+                        <div
+                            className="flex w-full"
+                            style={{
+                                height:
+                                    props.pages[selectedTab].additionalMedia ==
+                                    undefined
+                                        ? "100%"
+                                        : "75%",
+                            }}
+                        >
+                            {props.pages[selectedTab].media.type == "img" && (
+                                <CardMedia
+                                    className="flex w-full h-full border border-grey rounded-lg "
+                                    component="img"
+                                    image={props.pages[selectedTab].media.path}
+                                    title="My Card Image"
+                                />
+                            )}
+                            {props.pages[selectedTab].media.type == "video" && (
+                                <CardMedia
+                                    className="flex w-full h-full border border-grey rounded-lg "
+                                    component="iframe"
+                                    src={props.pages[selectedTab].media.path}
+                                />
                             )}
                         </div>
-                    )}
+                        {props.pages[selectedTab].additionalMedia !=
+                            undefined && (
+                            <div className="flex flex-row h-1/4">
+                                {props.pages[selectedTab].additionalMedia?.map(
+                                    (path: string, index: number) => (
+                                        <div
+                                            className="flex flex-row w-1/3 "
+                                            key={index}
+                                        >
+                                            <CardMedia
+                                                className="flex w-full h-full  border border-grey rounded-lg"
+                                                component="img"
+                                                image={path}
+                                                title="My Card Image"
+                                            />
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
-            </div>
+            </CardContent>
         </Card>
     );
 }
