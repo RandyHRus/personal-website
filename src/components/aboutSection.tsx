@@ -14,7 +14,7 @@ export default function AboutSection() {
                 About
             </Typography>
             <div className=" flex m-10 h-full justify-center ">
-                <Typography className="text-white text-center text-xl w-1/3 ">
+                <Typography className="text-white text-center text-xl max-w-md ">
                     Hi, I&apos;m Randy. I&apos;m a software developer and I hold
                     a B.Sc in Computer Science from the University of British
                     Columbia.
@@ -24,7 +24,7 @@ export default function AboutSection() {
                     helped develop a data wrangling microservice.
                     <br />
                     <br />
-                    At Delta-Q Technologies, I worked as a co-op application
+                    At Delta-Q Technologies, I worked as a co-op full-stack
                     developer. I developed desktop applications for battery
                     chargers used in electric vehicles.
                     <br />
