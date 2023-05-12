@@ -53,8 +53,8 @@ export default function ProjectCardPopup(props: Props) {
                 ))}
             </Tabs>
             {/** Text area */}
-            <CardContent className="p-4 flex flex-row justify-between h-full w-full">
-                <div className="w-2/5 flex flex-col h-full">
+            <CardContent className="p-4 flex lg:flex-row flex-col justify-between h-full w-full">
+                <div className="lg:w-2/5 w-full flex flex-col lg:h-full h-2/5">
                     {/** Title */}
                     <Typography className="text-2xl">{props.title}</Typography>
                     {/** Icons */}
@@ -74,18 +74,16 @@ export default function ProjectCardPopup(props: Props) {
                     </Typography>
                 </div>
                 {/** Picture area */}
-                <div className="w-3/5 flex h-full">
-                    <div className="flex flex-col w-full h-full ">
+                <div className="lg:w-3/5 w-full flex lg:h-full h-2/5">
+                    <div className="flex lg:flex-col flex-row w-full h-full">
                         {/** Main image or video */}
                         <div
-                            className="flex w-full"
-                            style={{
-                                height:
-                                    props.pages[selectedTab].additionalMedia ==
-                                    undefined
-                                        ? "100%"
-                                        : "75%",
-                            }}
+                            className={`flex lg:w-full w-1/2 ${
+                                props.pages[selectedTab].additionalMedia ==
+                                undefined
+                                    ? "h-full"
+                                    : "lg:h-3/4 h-full"
+                            }`}
                         >
                             {props.pages[selectedTab].media.type == "img" && (
                                 <CardMedia
@@ -103,13 +101,14 @@ export default function ProjectCardPopup(props: Props) {
                                 />
                             )}
                         </div>
+                        {/** Additional pictures */}
                         {props.pages[selectedTab].additionalMedia !=
                             undefined && (
-                            <div className="flex flex-row h-1/4">
+                            <div className="flex lg:flex-row flex-col lg:h-1/4 h-full lg:w-full w-1/2">
                                 {props.pages[selectedTab].additionalMedia?.map(
                                     (path: string, index: number) => (
                                         <div
-                                            className="flex flex-row w-1/3 "
+                                            className="flex flex-row lg:w-1/3 w-full lg:h-full h-1/3"
                                             key={index}
                                         >
                                             <CardMedia
