@@ -157,7 +157,7 @@ const featuredProjects: Project[] = [
 
 const otherProjects: Project[] = [
     {
-        id: "aquariumLiveWallpaper",
+        id: "aquarium",
         title: "Aquarium live wallpaper",
         mainImage: "/images/aquarium/aquarium4.png",
         pages: [
@@ -192,7 +192,7 @@ const otherProjects: Project[] = [
         technologies: ["C"],
     },
     {
-        id: "starFarm",
+        id: "starfarm",
         title: "Star farm",
         pages: [
             {
@@ -316,7 +316,7 @@ const otherProjects: Project[] = [
         ],
     },
     {
-        id: "cellularAutomata",
+        id: "cells",
         title: "Cellular automata",
         pages: [
             {
@@ -341,7 +341,7 @@ const otherProjects: Project[] = [
         technologies: ["Unity", "C#", "React", "Material-ui", "TypeScript"],
     },
     {
-        id: "spaceLiveWallpaper",
+        id: "space",
         title: "Space live wallpaper",
         pages: [
             {
@@ -420,7 +420,7 @@ const otherProjects: Project[] = [
         technologies: ["RaspberryPi", "Arduino"],
     },
     {
-        id: "personalWebsite",
+        id: "personalwebsite",
         title: "Personal website",
         pages: [
             {
