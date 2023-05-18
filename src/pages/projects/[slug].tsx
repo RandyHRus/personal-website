@@ -8,7 +8,7 @@ const ProjectPage = () => {
 
     // check if slug is string
     if (typeof slug !== "string") {
-        return <ErrorPage statusCode={404} />;
+        return <div />;
     } else {
         return <Home projectId={slug}></Home>;
     }
