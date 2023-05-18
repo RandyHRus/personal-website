@@ -8,7 +8,7 @@ import {
     Tabs,
     Typography,
 } from "@mui/material";
-import { Component, useState } from "react";
+import { Component, RefObject, useRef, useState } from "react";
 import { DevIcon } from "@/icons/devicons";
 
 export interface Page {
@@ -26,6 +26,14 @@ interface Props {
 
 export default function ProjectCardPopup(props: Props) {
     const [selectedTab, setSelectedTab] = useState<number>(0);
+    const scrollRef: RefObject<HTMLDivElement> = useRef(null);
+
+    function tabChangeHandler(index: number) {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo(0, 0); // Scroll to the top-left position
+        }
+        setSelectedTab(index);
+    }
 
     return (
         <Card className="flex flex-row h-full shadow-xl rounded-lg bg-grey">
@@ -48,12 +56,15 @@ export default function ProjectCardPopup(props: Props) {
                             selected: "text-primary",
                         }}
                         label={"Page " + (index + 1)}
-                        onClick={() => setSelectedTab(index)}
+                        onClick={() => tabChangeHandler(index)}
                     />
                 ))}
             </Tabs>
             <CardContent className="p-4 justify-between h-full w-full">
-                <div className="w-full lg:flex-row flex-col h-full flex overflow-auto">
+                <div
+                    ref={scrollRef}
+                    className="w-full lg:flex-row flex-col h-full flex overflow-auto"
+                >
                     {/** Text area */}
                     <div className="lg:w-2/5 w-full flex flex-col lg:h-full h-auto">
                         {/** Title */}
@@ -79,7 +90,7 @@ export default function ProjectCardPopup(props: Props) {
                     </div>
                     {/** Picture area */}
                     <div className="lg:w-3/5 w-full flex lg:h-full h-96">
-                        <div className="flex lg:flex-col flex-row w-full h-full">
+                        <div className="flex flex-col w-full h-full">
                             {/** Main image or video */}
                             <div
                                 className={`flex ${
@@ -114,17 +125,17 @@ export default function ProjectCardPopup(props: Props) {
                             {/** Additional pictures */}
                             {props.pages[selectedTab].additionalMedia !=
                                 undefined && (
-                                <div className="flex lg:flex-row flex-col lg:h-1/4 h-full lg:w-full w-1/2">
+                                <div className="flex lg:flex-row flex-col lg:h-1/4 h-full w-full">
                                     {props.pages[
                                         selectedTab
                                     ].additionalMedia?.map(
                                         (path: string, index: number) => (
                                             <div
-                                                className="flex flex-row lg:w-1/3 w-full lg:h-full h-1/3"
+                                                className="flex flex-row lg:w-1/3 w-full h-full mt-5"
                                                 key={index}
                                             >
                                                 <CardMedia
-                                                    className="flex w-full h-full  border border-grey rounded-lg"
+                                                    className="flex w-full h-full border border-grey rounded-lg"
                                                     component="img"
                                                     image={path}
                                                     title="My Card Image"
