@@ -138,8 +138,9 @@ const featuredProjects: Project[] = [
         pages: [
             {
                 text: `I have gained proficiency in implementing machine learning algorithms utilising Python and popular libraries such as Numpy and Pandas. \n
-                During this process, we focused on writing the algorithms from scratch, without relying on frameworks like Tensorflow or PyTorch.\n
-                Some algorithms implemented include k-means, k-nearest-neighbours, linear regression, logistic regression, naive Bayes, principal component analysis, stochastic gradient descent, and random forests.`,
+                During this process, we focused on writing the algorithms from scratch, without relying on frameworks like Scikit-learn.\n
+                Some algorithms implemented include k-means, k-nearest-neighbours, linear regression, logistic regression, naive Bayes, principal component analysis, stochastic gradient descent, and random forests.\n
+                I also gained proficiency using Scikit-learn as the performance of these algorithms were compared to the performance of the same algorithms in Scikit-learn.`,
                 media: {
                     type: "img",
                     path: "/images/ml/logRegGaussian.png",
