@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pinball</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="control">
+        <p>
+        Controls:<br>
+        Charge ball - Hold R<br>
+        Right flipper - D<br>
+        Left flipper - A<br>
+        </p>
+    </div>
+    <script src="matter.js" type="text/javascript"></script>
+    <script src="gameBoard.js" type="text/javascript"></script>
+    <script src="flipper.js" type="text/javascript"></script>
+    <script src="bumper.js" type="text/javascript"></script>
+    <script>
+        let engine = Matter.Engine.create();
+
+        engine.gravity.y = 0.9
+
+        FLIPPER_ANGLE_UP = Math.PI * -0.2;
+        FLIPPER_ANGLE_DOWN = Math.PI * 0.19;
+        FLIPPER_SPEED = 0.3;
+        FLIPPER_OFFSET = 130;
+
+        CHARGE_SPEED = 0.05;
+        CHARGE_TARGET_STIFFNESS = 0.0001;
+        CHARGE_DEFAULT_STIFFNESS = 0.2;
+
+        AREA_SIZE_X = 600;
+        AREA_SIZE_Y = 700;
+
+        let charging = false;
+        let charge_amount = 0;
+
+        let render = Matter.Render.create({
+            element: document.body,
+            engine: engine
+        });
+
+        let slingGridPosition = {x: 22, y: -24}
+
+        let [
+            leftFlipper, 
+            rightFlipper,
+            slingBumper,
+            slingString,
+            ball
+        ] = drawBoard();
+
+        update();
+
+        function update() {
+
+            let flippers = [leftFlipper, rightFlipper];
+
+            for (let flipper of flippers) {
+                switch (flipper.state) {
+                    case ("rest"):
+                        Matter.Body.setAngle(flipper.body, flipper.flip*FLIPPER_ANGLE_DOWN);
+                        Matter.Body.setAngularVelocity(flipper.body, 0);
+                        if (flipper.keyDown) {
+                            flipper.state = "movingUp";
+                        }
+                        break;
+                    case ("movingUp"):
+                        Matter.Body.setAngularVelocity(flipper.body, flipper.flip*-FLIPPER_SPEED);
+                        if (flipper.flip*flipper.body.angle <= FLIPPER_ANGLE_UP) {
+                            if (!flipper.keyDown) {
+                                flipper.state = "movingDown";
+                            } else {
+                                flipper.state = "restUp"
+                            }
+                        }
+                        break;
+                    case ("restUp"): 
+                        Matter.Body.setAngle(flipper.body, flipper.flip*FLIPPER_ANGLE_UP);
+                        Matter.Body.setAngularVelocity(flipper.body, 0);
+                        if (!flipper.keyDown) {
+                            flipper.state = "movingDown";
+                        }
+                        break;
+                    case ("movingDown"):
+                        Matter.Body.setAngularVelocity(flipper.body, flipper.flip*FLIPPER_SPEED);
+                        if (flipper.flip*flipper.body.angle >= FLIPPER_ANGLE_DOWN) {
+                            flipper.state = "rest";
+                        }
+                        break;
+                }
+            }
+
+            if (charging) {
+                charge_amount -= CHARGE_SPEED;
+                if (charge_amount < CHARGE_TARGET_STIFFNESS) {
+                    charge_amount = CHARGE_TARGET_STIFFNESS;
+                }
+                slingString.stiffness = charge_amount;
+            }
+            //console.log(ball.position.y)
+            if (ball.position.y > 620) {
+                resetBall();
+            }
+
+            requestAnimationFrame(function() {
+                update();
+            })
+        }
+        
+        window.addEventListener("keydown", event => {
+            if (event.keyCode == 65) { //Left
+                leftFlipper.keyDown = true;
+            } else if (event.keyCode == 68) { //right
+                rightFlipper.keyDown = true;
+            } else if (event.keyCode == 82) { //r
+                if (!charging) {
+                    charge_amount = slingString.stiffness;
+                    charging = true;
+                }
+            }
+        });
+
+        window.addEventListener("keyup", event => {      
+            if (event.keyCode == 65) { //Left
+                leftFlipper.keyDown = false;
+            } else if (event.keyCode == 68) { //right
+                rightFlipper.keyDown = false;
+            } else if (event.keyCode == 82) { //r
+                slingString.stiffness = CHARGE_DEFAULT_STIFFNESS;
+                charging = false;
+            }
+        });
+
+        window.addEventListener("resize", function(){
+            reposition();
+        });
+
+        Matter.Runner.run(engine);
+        Matter.Render.run(render);
+
+    </script>
+  </body>
+</html>
