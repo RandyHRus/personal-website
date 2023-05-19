@@ -118,7 +118,7 @@ export default function ProjectCardPopup(props: Props) {
                                 {props.pages[selectedTab].media.type ==
                                     "img" && (
                                     <CardMedia
-                                        className="flex w-full h-full border border-grey rounded-lg "
+                                        className="flex w-full h-full border border-grey rounded-lg object-contain object-center bg-grey"
                                         component="img"
                                         image={
                                             props.pages[selectedTab].media.path

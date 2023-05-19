@@ -494,6 +494,11 @@ export default function ProjectsSection(props: { projectId?: string }) {
                         type: "img",
                         path: "/images/website/personal-website.png",
                     },
+                    additionalMedia: [
+                        "/images/website/website2.png",
+                        "/images/website/website3.png",
+                        "/images/website/website4.png",
+                    ],
                 },
             ],
             mainImage: "/images/website/personal-website.png",
