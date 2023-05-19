@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Card,
     CardContent,
     CardMedia,
@@ -22,6 +23,7 @@ interface Props {
     pages: Page[];
     projectLink: string;
     technologies: string[] | null;
+    button?: { action: () => void; text: string };
 }
 
 export default function ProjectCardPopup(props: Props) {
@@ -87,6 +89,19 @@ export default function ProjectCardPopup(props: Props) {
                             {props.pages[selectedTab].text}
                         </Typography>
                         <br />
+                        {/**  button */}
+                        <div className="flex items-center flex-col">
+                            {props.button && (
+                                <Button
+                                    variant="contained"
+                                    className=" flex relative w-min bg-primary text-white"
+                                    onClick={() => props.button?.action()}
+                                >
+                                    {props.button?.text}
+                                </Button>
+                            )}
+                            <br />
+                        </div>
                     </div>
                     {/** Picture area */}
                     <div className="lg:w-3/5 w-full flex lg:h-full h-96">
@@ -131,7 +146,7 @@ export default function ProjectCardPopup(props: Props) {
                                     ].additionalMedia?.map(
                                         (path: string, index: number) => (
                                             <div
-                                                className="flex flex-row lg:w-1/3 w-full h-full mt-5"
+                                                className="flex flex-row lg:w-1/3 w-full h-full lg:mt-0 mt-5"
                                                 key={index}
                                             >
                                                 <CardMedia
