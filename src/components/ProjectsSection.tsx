@@ -574,7 +574,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     <Typography className="text-center text-3xl">
                         Featured projects
                     </Typography>
-                    <div className="relative flex flex-col w-screen h-auto p-12">
+                    <div className="relative flex flex-col w-full h-auto p-12">
                         <ProjectCardsList projects={featuredProjects} />
                     </div>
                     <br />
@@ -583,8 +583,10 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     <Typography className="text-center text-3xl">
                         Other projects
                     </Typography>
-                    <div className="relative flex flex-col w-screen h-auto p-12">
-                        <ProjectCardsList projects={otherProjects} />
+                    <div className="flex relative w-screen h-auto justify-center">
+                        <div className="relative flex flex-col w-screen max-w-[750px] h-auto p-12 ">
+                            <ProjectCardsList projects={otherProjects} />
+                        </div>
                     </div>
                 </div>
             </div>
