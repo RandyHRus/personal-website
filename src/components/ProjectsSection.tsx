@@ -93,8 +93,8 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     }, // perlin noise source: https://gfycat.com/aggravatingthosearieltoucan
                     additionalMedia: [
                         "/images/resorto/perlinNoise.gif",
-                        "/images/resorto/island2.png",
-                        "/images/resorto/island3.png",
+                        "/images/resorto/Island2.png",
+                        "/images/resorto/Island3.png",
                     ],
                 },
                 {
