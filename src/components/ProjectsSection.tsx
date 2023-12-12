@@ -7,7 +7,8 @@ import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
 import PinballPopup from "./pinballPopup";
 import { useInView } from "react-intersection-observer";
-import FadeInComponent from "./fadeInComponent";
+
+const popupDelay = 0.3;
 
 interface Project {
     id: string;
@@ -526,21 +527,29 @@ export default function ProjectsSection(props: { projectId?: string }) {
         projectsDict[project.id] = project;
     });
 
+    // TODO: refactor
     const [selectedProject, setSelectedProject] = useState<Project | null>(
         props.projectId && projectsDict[props.projectId]
             ? projectsDict[props.projectId]
             : null
     );
 
-    const [fadeInRef, fadeInView] = useInView({
-        triggerOnce: true, // Trigger the animation only once
-    });
+    // TODO: refactor
+    const [closingProject, setClosingProject] = useState<Project | null>(
+        props.projectId && projectsDict[props.projectId]
+            ? projectsDict[props.projectId]
+            : null
+    );
 
     function handlePopupClose() {
         if (pinballOpen) {
             setPinballOpen(false);
         } else {
+            setClosingProject(selectedProject);
             setSelectedProject(null);
+            setTimeout(() => {
+                setClosingProject(null);
+            }, popupDelay * 1000);
         }
     }
 
@@ -554,9 +563,13 @@ export default function ProjectsSection(props: { projectId?: string }) {
                         key={item.id}
                         layoutId={item.id}
                         onClick={() => setSelectedProject(item)}
-                        className=" m-2 text-white"
-                        whileHover={{ scale: 1.2, zIndex: 1 }}
-                        //animate={{ transitionEnd: { zIndex: 0 } }}
+                        className={`m-2 text-white ${
+                            closingProject && closingProject.id === item.id
+                                ? "z-10"
+                                : ""
+                        }`}
+                        whileHover={{ scale: 1.2, zIndex: 10 }}
+                        //animate={{ transitionEnd: { zIndex: 1 } }}
                     >
                         <ProjectCardSmall
                             imgPath={item.mainImage}
@@ -618,7 +631,9 @@ export default function ProjectsSection(props: { projectId?: string }) {
                             id="projectMotionDiv"
                             className=" w-4/5 h-4/5 z-30"
                             layoutId={selectedProject.id}
-                            transition={{ duration: 0.3 }}
+                            transition={{
+                                duration: popupDelay,
+                            }}
                         >
                             <ProjectCardPopup
                                 title={selectedProject.title}
@@ -634,7 +649,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                             id="projectMotionDiv"
                             className="w-[650px] max-w-[4/5] h-[750px] max-h-[4/5] z-30"
                             layoutId={selectedProject.id}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: popupDelay }}
                         >
                             <PinballPopup />
                         </motion.div>

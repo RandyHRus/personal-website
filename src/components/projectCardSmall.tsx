@@ -13,7 +13,6 @@ export default function ProjectCardSmall(props: any) {
     const [ref, inView] = useInView({});
 
     if (inView) inViewTriggered = true;
-    console.log("here");
 
     return (
         <motion.div
