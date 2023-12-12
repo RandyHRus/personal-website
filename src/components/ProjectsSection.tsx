@@ -9,7 +9,7 @@ import PinballPopup from "./pinballPopup";
 import { useInView } from "react-intersection-observer";
 
 const popupDelay = 0.3;
-const hoverSpeed = 0.3;
+const hoverSpeed = 0.15;
 
 interface Project {
     id: string;
