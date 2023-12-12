@@ -7,7 +7,7 @@ interface Props {
     imgPath: string;
 }
 
-export default function ProjectCardSmall(props: Props) {
+export default function ProjectCardSmall(props: any) {
     const [ref, inView] = useInView({
         triggerOnce: true, // Trigger the animation only once
     });

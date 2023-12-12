@@ -6,6 +6,8 @@ import ProjectCardPopup, { Page } from "@/components/projectCardPopup";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
 import PinballPopup from "./pinballPopup";
+import { useInView } from "react-intersection-observer";
+import FadeInComponent from "./fadeInComponent";
 
 interface Project {
     id: string;
@@ -530,6 +532,10 @@ export default function ProjectsSection(props: { projectId?: string }) {
             : null
     );
 
+    const [fadeInRef, fadeInView] = useInView({
+        triggerOnce: true, // Trigger the animation only once
+    });
+
     function handlePopupClose() {
         if (pinballOpen) {
             setPinballOpen(false);
@@ -545,11 +551,12 @@ export default function ProjectsSection(props: { projectId?: string }) {
             <div className="relative flex flex-row flex-wrap justify-center items-center ">
                 {props.projects.map((item) => (
                     <motion.button
+                        key={item.id}
                         layoutId={item.id}
                         onClick={() => setSelectedProject(item)}
-                        key={item.id}
-                        className="  m-2 text-white"
-                        whileHover={{ scale: 1.2 }}
+                        className=" m-2 text-white"
+                        whileHover={{ scale: 1.2, zIndex: 1 }}
+                        //animate={{ transitionEnd: { zIndex: 0 } }}
                     >
                         <ProjectCardSmall
                             imgPath={item.mainImage}
@@ -589,7 +596,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                         Other projects
                     </Typography>
                     <div className="flex relative w-screen h-auto justify-center">
-                        <div className="relative flex flex-col w-screen max-w-[750px] h-auto p-12 ">
+                        <div className="relative flex flex-col w-screen max-w-[800px] h-auto p-12 ">
                             <ProjectCardsList projects={otherProjects} />
                         </div>
                     </div>
