@@ -9,6 +9,7 @@ import PinballPopup from "./pinballPopup";
 import { useInView } from "react-intersection-observer";
 
 const popupDelay = 0.3;
+const hoverSpeed = 0.3;
 
 interface Project {
     id: string;
@@ -549,7 +550,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
             setSelectedProject(null);
             setTimeout(() => {
                 setClosingProject(null);
-            }, popupDelay * 1000);
+            }, (popupDelay + hoverSpeed) * 1000);
         }
     }
 
@@ -568,7 +569,11 @@ export default function ProjectsSection(props: { projectId?: string }) {
                                 ? "z-10"
                                 : ""
                         }`}
-                        whileHover={{ scale: 1.2, zIndex: 10 }}
+                        whileHover={{
+                            scale: 1.2,
+                            zIndex: 10,
+                            transition: { duration: hoverSpeed },
+                        }}
                         //animate={{ transitionEnd: { zIndex: 1 } }}
                     >
                         <ProjectCardSmall
