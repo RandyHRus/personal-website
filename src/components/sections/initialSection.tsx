@@ -2,9 +2,12 @@ import store from "@/state/reduxState";
 import { connect } from "react-redux";
 import { Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import OfficeScene from "./officeScene";
+import OfficeScene from "../officeScene";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import LiquidScene from "./liquidScene";
+import LiquidScene from "../liquidScene";
+import SectionHeading from "../text/sectionHeading";
+import ParagraphText from "../text/paragraphText";
+import SubSectionHeading from "../text/subHeadingText";
 
 const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
@@ -26,10 +29,10 @@ function InitialSection(props: any) {
                         duration: 1.5,
                     }}
                 >
-                    <h1 className="text-6xl font-bold text-white">
-                        Randy Russell
-                    </h1>
-                    <h2 className="text-3xl text-white">Software Developer</h2>
+                    <SectionHeading>Randy Russell</SectionHeading>
+                    <SubSectionHeading color="text-white">
+                        Software Developer
+                    </SubSectionHeading>
                 </motion.div>
             </AnimatePresence>
             {/* Scroll indicator */}

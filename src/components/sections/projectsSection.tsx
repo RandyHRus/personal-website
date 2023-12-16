@@ -5,8 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import ProjectCardPopup, { Page } from "@/components/projectCardPopup";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
-import PinballPopup from "./pinballPopup";
+import PinballPopup from "../pinballPopup";
 import { useInView } from "react-intersection-observer";
+import SubSectionHeading from "../text/subHeadingText";
 
 const popupDelay = 0.3;
 const hoverSpeed = 0.15;
@@ -40,7 +41,10 @@ const TextAnimation = (props: { text: string }) => {
                             },
                         }}
                     >
-                        <Typography variant="h1" className=" text-primary">
+                        <Typography
+                            variant="h2"
+                            className=" text-primary font-normal"
+                        >
                             {char}
                         </Typography>
                     </motion.div>
@@ -601,18 +605,16 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     <br />
                     <br />
                     {/** Featured project cards list */}
-                    <Typography className="text-center text-3xl">
+                    <SubSectionHeading color="text-black">
                         Featured projects
-                    </Typography>
+                    </SubSectionHeading>
                     <div className="relative flex flex-col w-full h-auto p-12">
                         <ProjectCardsList projects={featuredProjects} />
                     </div>
                     <br />
                     <br />
                     {/** Other projects cards list */}
-                    <Typography className="text-center text-3xl">
-                        Other projects
-                    </Typography>
+                    <SubSectionHeading>Other projects</SubSectionHeading>
                     <div className="flex relative w-screen h-auto justify-center">
                         <div className="relative flex flex-col w-screen max-w-[800px] h-auto p-12 ">
                             <ProjectCardsList projects={otherProjects} />

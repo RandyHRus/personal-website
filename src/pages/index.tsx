@@ -1,11 +1,12 @@
 import store from "@/state/reduxState";
 import { Provider } from "react-redux";
-import ProjectsSection from "@/components/ProjectsSection";
 import ResponsiveAppBar from "@/components/responsiveAppBar";
-import ContactSection from "@/components/contactSection";
-import AboutSection from "@/components/aboutSection";
-import InitialSection from "@/components/initialSection";
+import ContactSection from "@/components/sections/contactSection";
+import AboutSection from "@/components/sections/aboutSection";
+import WorkExperienceSection from "@/components/sections/workExperienceSection";
+import InitialSection from "@/components/sections/initialSection";
 import Stripe from "@/components/stripe";
+import ProjectsSection from "@/components/sections/projectsSection";
 
 export default function Home(props: { projectId?: string }) {
     return (
@@ -15,10 +16,11 @@ export default function Home(props: { projectId?: string }) {
                 <InitialSection />
                 {/**spacer to make sure that zoom completely ends before displaying further UI */}
                 <div
-                    className="relative flex flex-col w-screen h-"
+                    className="relative flex flex-col w-screen"
                     style={{ height: "50vh" }}
                 />
                 <AboutSection />
+                <WorkExperienceSection />
                 <Stripe />
                 <ProjectsSection projectId={props.projectId} />
                 <Stripe />
