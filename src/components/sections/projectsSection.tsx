@@ -5,7 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import ProjectCardPopup, { Page } from "@/components/projectCardPopup";
 import ProjectCardSmall from "@/components/projectCardSmall";
 import { Provider } from "react-redux";
-import PinballPopup from "./pinballPopup";
+import PinballPopup from "../pinballPopup";
+import { useInView } from "react-intersection-observer";
+import SubSectionHeading from "../text/subHeadingText";
+
+const popupDelay = 0.3;
+const hoverSpeed = 0.15;
 
 interface Project {
     id: string;
@@ -36,7 +41,10 @@ const TextAnimation = (props: { text: string }) => {
                             },
                         }}
                     >
-                        <Typography variant="h1" className=" text-primary">
+                        <Typography
+                            variant="h2"
+                            className=" text-primary font-normal"
+                        >
                             {char}
                         </Typography>
                     </motion.div>
@@ -524,7 +532,15 @@ export default function ProjectsSection(props: { projectId?: string }) {
         projectsDict[project.id] = project;
     });
 
+    // TODO: refactor
     const [selectedProject, setSelectedProject] = useState<Project | null>(
+        props.projectId && projectsDict[props.projectId]
+            ? projectsDict[props.projectId]
+            : null
+    );
+
+    // TODO: refactor
+    const [closingProject, setClosingProject] = useState<Project | null>(
         props.projectId && projectsDict[props.projectId]
             ? projectsDict[props.projectId]
             : null
@@ -534,7 +550,11 @@ export default function ProjectsSection(props: { projectId?: string }) {
         if (pinballOpen) {
             setPinballOpen(false);
         } else {
+            setClosingProject(selectedProject);
             setSelectedProject(null);
+            setTimeout(() => {
+                setClosingProject(null);
+            }, (popupDelay + hoverSpeed) * 1000);
         }
     }
 
@@ -545,11 +565,20 @@ export default function ProjectsSection(props: { projectId?: string }) {
             <div className="relative flex flex-row flex-wrap justify-center items-center ">
                 {props.projects.map((item) => (
                     <motion.button
+                        key={item.id}
                         layoutId={item.id}
                         onClick={() => setSelectedProject(item)}
-                        key={item.id}
-                        className="  m-2 text-white"
-                        whileHover={{ scale: 1.2 }}
+                        className={`m-2 text-white ${
+                            closingProject && closingProject.id === item.id
+                                ? "z-10"
+                                : ""
+                        }`}
+                        whileHover={{
+                            scale: 1.2,
+                            zIndex: 10,
+                            transition: { duration: hoverSpeed },
+                        }}
+                        //animate={{ transitionEnd: { zIndex: 1 } }}
                     >
                         <ProjectCardSmall
                             imgPath={item.mainImage}
@@ -576,20 +605,18 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     <br />
                     <br />
                     {/** Featured project cards list */}
-                    <Typography className="text-center text-3xl">
+                    <SubSectionHeading color="text-black">
                         Featured projects
-                    </Typography>
+                    </SubSectionHeading>
                     <div className="relative flex flex-col w-full h-auto p-12">
                         <ProjectCardsList projects={featuredProjects} />
                     </div>
                     <br />
                     <br />
                     {/** Other projects cards list */}
-                    <Typography className="text-center text-3xl">
-                        Other projects
-                    </Typography>
+                    <SubSectionHeading>Other projects</SubSectionHeading>
                     <div className="flex relative w-screen h-auto justify-center">
-                        <div className="relative flex flex-col w-screen max-w-[750px] h-auto p-12 ">
+                        <div className="relative flex flex-col w-screen max-w-[800px] h-auto p-12 ">
                             <ProjectCardsList projects={otherProjects} />
                         </div>
                     </div>
@@ -611,7 +638,9 @@ export default function ProjectsSection(props: { projectId?: string }) {
                             id="projectMotionDiv"
                             className=" w-4/5 h-4/5 z-30"
                             layoutId={selectedProject.id}
-                            transition={{ duration: 0.3 }}
+                            transition={{
+                                duration: popupDelay,
+                            }}
                         >
                             <ProjectCardPopup
                                 title={selectedProject.title}
@@ -627,7 +656,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                             id="projectMotionDiv"
                             className="w-[650px] max-w-[4/5] h-[750px] max-h-[4/5] z-30"
                             layoutId={selectedProject.id}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: popupDelay }}
                         >
                             <PinballPopup />
                         </motion.div>

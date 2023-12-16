@@ -21,6 +21,10 @@ const pages = [
         link: "#about",
     },
     {
+        name: "Work experience",
+        link: "#workExperience",
+    },
+    {
         name: "Projects",
         link: "#projects",
     },
