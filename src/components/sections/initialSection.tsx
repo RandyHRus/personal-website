@@ -29,7 +29,7 @@ function InitialSection(props: any) {
                         duration: 1.5,
                     }}
                 >
-                    <SectionHeading>Randy Russell</SectionHeading>
+                    <SectionHeading id="rr">Randy Russell</SectionHeading>
                     <SubSectionHeading color="text-white">
                         Software Developer
                     </SubSectionHeading>

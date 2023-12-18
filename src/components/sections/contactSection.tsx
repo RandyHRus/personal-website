@@ -6,10 +6,7 @@ import Section from "../section";
 
 export default function ContactSection() {
     return (
-        <div
-            id="contact"
-            className="relative flex flex-col w-screen pt-12 h-scren bg-tertiary z-30 skew-y-6"
-        >
+        <div className="relative flex flex-col w-screen pt-12 h-scren bg-tertiary z-30 skew-y-6">
             <div className="-skew-y-6 h-full">
                 <Section id="contact" heading="Contact" height="h-screen">
                     <div className="flex items-center justify-center flex-col">
