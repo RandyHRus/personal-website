@@ -40,16 +40,20 @@ export default function AboutSection() {
                     </SubSectionHeading>
                     <div className="flex flex-row max-w-xl w-full">
                         <div className="flex flex-col w-1/2 items-start">
-                            <ParagraphText>
+                            <ParagraphText textAlign="text-left">
                                 University of British Columbia
                             </ParagraphText>
-                            <ParagraphText>
+                            <ParagraphText textAlign="text-left">
                                 B.Sc. Computer Science
                             </ParagraphText>
                         </div>
                         <div className="flex flex-col items-end w-1/2">
-                            <ParagraphText>Sept 2018 - May 2023</ParagraphText>
-                            <ParagraphText>Vancouver, BC</ParagraphText>
+                            <ParagraphText textAlign="text-right">
+                                Sept 2018 - May 2023
+                            </ParagraphText>
+                            <ParagraphText textAlign="text-right">
+                                Vancouver, BC
+                            </ParagraphText>
                         </div>
                     </div>
                 </div>
@@ -63,16 +67,18 @@ export default function AboutSection() {
                             className="flex flex-row max-w-xl w-full"
                         >
                             <div className="flex flex-col w-1/2 items-start">
-                                <ParagraphText>
+                                <ParagraphText textAlign="text-left">
                                     {experience.position}
                                 </ParagraphText>
-                                <ParagraphText>
+                                <ParagraphText textAlign="text-left">
                                     {experience.company}
                                 </ParagraphText>
                             </div>
                             <div className="flex flex-col items-end w-1/2">
-                                <ParagraphText>{experience.date}</ParagraphText>
-                                <ParagraphText>
+                                <ParagraphText textAlign="text-right">
+                                    {experience.date}
+                                </ParagraphText>
+                                <ParagraphText textAlign="text-right">
                                     {experience.location}
                                 </ParagraphText>
                             </div>
