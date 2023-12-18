@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import ResponsiveAppBar from "@/components/responsiveAppBar";
 import ContactSection from "@/components/sections/contactSection";
 import AboutSection from "@/components/sections/aboutSection";
-import WorkExperienceSection from "@/components/sections/workExperienceSection";
 import InitialSection from "@/components/sections/initialSection";
 import Stripe from "@/components/stripe";
 import ProjectsSection from "@/components/sections/projectsSection";
@@ -20,7 +19,6 @@ export default function Home(props: { projectId?: string }) {
                     style={{ height: "50vh" }}
                 />
                 <AboutSection />
-                <WorkExperienceSection />
                 <Stripe />
                 <ProjectsSection projectId={props.projectId} />
                 <Stripe />

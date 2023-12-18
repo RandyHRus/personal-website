@@ -8,10 +8,10 @@ export default function ContactSection() {
     return (
         <div
             id="contact"
-            className="relative flex flex-col w-screen h-screen pt-12 bg-tertiary z-30 skew-y-6"
+            className="relative flex flex-col w-screen pt-12 h-scren bg-tertiary z-30 skew-y-6"
         >
             <div className="-skew-y-6 h-full">
-                <Section id="contact" heading="Contact">
+                <Section id="contact" heading="Contact" height="h-screen">
                     <div className="flex items-center justify-center flex-col">
                         <div className="flex flex-row items-center p-5">
                             <IconButton className=" text-white w-12 h-12">
