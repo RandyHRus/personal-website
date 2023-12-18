@@ -27,6 +27,9 @@ interface Project {
 const TextAnimation = (props: { text: string }) => {
     return (
         <div className="flex flex-col text-center items-center">
+            <div className="h-24" id="projects"></div>
+            {/** Spacer for app bar */}
+            {/** Spacer for app bar */}
             <div className="flex flex-row">
                 {props.text.split("").map((char, index) => (
                     <motion.div
@@ -592,10 +595,8 @@ export default function ProjectsSection(props: { projectId?: string }) {
 
     return (
         <Provider store={store}>
-            <div
-                className="relative flex flex-col w-screen h-auto z-30 bg-white skew-y-6"
-                id="projects"
-            >
+            <div className="relative flex flex-col w-screen h-auto z-30 bg-white skew-y-6">
+                <div className="h-24"></div> {/** Spacer for app bar */}
                 <div className="-skew-y-6">
                     {/** app bar spacer */}
                     <div className=" h-16" />

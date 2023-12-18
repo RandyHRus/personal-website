@@ -1,29 +1,11 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-
-interface Props {
-    title: string;
-    imgPath: string;
-}
-
-let inViewTriggered = false; // Global to ensure that animation only runs once.
+import FadeIn from "./fadeIn";
 
 export default function ProjectCardSmall(props: any) {
-    const [ref, inView] = useInView({});
-
-    if (inView) inViewTriggered = true;
-
     return (
-        <motion.div
-            ref={ref}
-            animate={inView || inViewTriggered ? "visible" : "hidden"}
-            variants={{
-                hidden: { opacity: 0, y: "20%" },
-                visible: { opacity: 1, y: "0%" },
-            }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+        <FadeIn>
             <Card className="flex flex-col w-48 h-56 shadow-lg rounded-lg">
                 <CardMedia
                     component="img"
@@ -35,6 +17,6 @@ export default function ProjectCardSmall(props: any) {
                     <Typography className=" text-lg ">{props.title}</Typography>
                 </CardContent>
             </Card>
-        </motion.div>
+        </FadeIn>
     );
 }
