@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { ReactNode } from "react";
+import FadeIn from "../fadeIn";
 
 export default function ParagraphText({
     textAlign = "text-center",
@@ -9,8 +10,10 @@ export default function ParagraphText({
     children: ReactNode;
 }) {
     return (
-        <Typography className={`text-white text-xl max-w-xl ${textAlign}`}>
-            {children}
-        </Typography>
+        <FadeIn>
+            <Typography className={`text-white text-xl max-w-xl ${textAlign}`}>
+                {children}
+            </Typography>
+        </FadeIn>
     );
 }

@@ -13,10 +13,10 @@ export default function FadeIn(props: any) {
             ref={ref}
             animate={inView || inViewTriggered ? "visible" : "hidden"}
             variants={{
-                hidden: { opacity: 0, y: "20%" },
+                hidden: { opacity: 0, y: "25%" },
                 visible: { opacity: 1, y: "0%" },
             }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
         >
             {props.children}
         </motion.div>
