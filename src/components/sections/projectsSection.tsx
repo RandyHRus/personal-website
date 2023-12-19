@@ -649,6 +649,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
                                 technologies={selectedProject.technologies}
                                 pages={selectedProject.pages}
                                 button={selectedProject.button}
+                                handleClose={handlePopupClose}
                             />
                         </motion.div>
                     )}
