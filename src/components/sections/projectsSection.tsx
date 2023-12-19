@@ -595,7 +595,7 @@ export default function ProjectsSection(props: { projectId?: string }) {
 
     return (
         <Provider store={store}>
-            <div className="relative flex flex-col w-screen h-auto z-30 bg-white skew-y-6">
+            <div className="relative flex flex-col w-full h-auto z-30 bg-white skew-y-6">
                 <div className="h-24"></div> {/** Spacer for app bar */}
                 <div className="-skew-y-6">
                     {/** app bar spacer */}
@@ -616,8 +616,8 @@ export default function ProjectsSection(props: { projectId?: string }) {
                     <br />
                     {/** Other projects cards list */}
                     <SubSectionHeading>Other projects</SubSectionHeading>
-                    <div className="flex relative w-screen h-auto justify-center">
-                        <div className="relative flex flex-col w-screen max-w-[800px] h-auto p-12 ">
+                    <div className="flex relative w-full h-auto justify-center">
+                        <div className="relative flex flex-col w-full max-w-[800px] h-auto p-12 ">
                             <ProjectCardsList projects={otherProjects} />
                         </div>
                     </div>

@@ -13,7 +13,7 @@ const mapStateToProps = (state: any) => ({ thisState: state.appState });
 
 function InitialSection(props: any) {
     return (
-        <div id="initial" className="relative flex flex-col w-screen h-screen">
+        <div id="initial" className="relative flex flex-col w-full h-screen">
             {/* 3JS scene */}
             <LiquidScene />
             {/* This is a gradient to make the text easier to read */}
