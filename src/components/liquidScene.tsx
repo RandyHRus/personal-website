@@ -4,6 +4,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as TWEEN from "@tweenjs/tween.js";
 import store, { STATES } from "@/state/reduxState";
 import { connect, useSelector } from "react-redux";
+import { Alert, Snackbar } from "@mui/material";
 
 /**
  * Inspired from this tutorial: https://www.youtube.com/watch?v=6YJ-2MvDqhc
@@ -171,12 +172,18 @@ function LiquidScene(props: { thisState: any }) {
     const [fadeOpacity, setFadeOpacity] = useState(0);
     const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
     const [yPos, setYPos] = useState<number>(0);
+    const [error, setError] = useState<string>("");
     const thisState = useSelector((state) => props.thisState);
 
     // It is laggy to resize the window, especially in a 3D scene. Use throttling to optimize. More info:
     // https://web.archive.org/web/20220714020647/https://bencentra.com/code/2015/02/27/optimizing-window-resize.html
     let throttledResize = useRef<boolean>(false);
     const throttleResizeDelay: number = 250;
+
+    const handleErrorClose = () => {
+        console.log("closing error");
+        setError("");
+    };
 
     // Handle page load
     useEffect(() => {
@@ -198,10 +205,20 @@ function LiquidScene(props: { thisState: any }) {
         const canvas: HTMLElement = document.getElementById(
             "threeCanvas"
         ) as HTMLElement;
-        const _renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-        _renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(_renderer.domElement);
-        setRenderer(_renderer);
+        try {
+            const _renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+            });
+            _renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(_renderer.domElement);
+            setRenderer(_renderer);
+        } catch (err) {
+            let errorMsg: string =
+                "Failed to render WebGL scene. This could be due to hardware acceleration being turned off in your browser settings.";
+            console.error(errorMsg);
+            setError(errorMsg);
+        }
 
         // change yPos on scroll
         window.onscroll = () => {
@@ -325,22 +342,34 @@ function LiquidScene(props: { thisState: any }) {
     }, [camera, thisState.appState.state, yPos]);
 
     return (
-        <div
-            style={{
-                opacity: fadeOpacity,
-            }}
-            className="fixed bg-tertiary h-screen w-screen z-10"
-        >
-            <canvas
-                id="threeCanvas"
+        <div>
+            <div
                 style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
+                    opacity: fadeOpacity,
                 }}
-            />
+                className="fixed bg-tertiary h-screen w-screen z-10"
+            >
+                <canvas
+                    id="threeCanvas"
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                    }}
+                />
+            </div>
+            <Snackbar
+                open={error !== ""}
+                autoHideDuration={60000}
+                onClose={handleErrorClose}
+                className="z-10"
+            >
+                <Alert severity="error" sx={{ width: "100%" }}>
+                    {error}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
