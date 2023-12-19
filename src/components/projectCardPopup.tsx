@@ -40,11 +40,11 @@ export default function ProjectCardPopup(props: Props) {
     }
 
     return (
-        <Card className="flex flex-col h-full shadow-xl rounded-lg bg-grey">
+        <Card className="flex flex-col h-full shadow-xl rounded-lg bg-white">
             {/** Bar that contains the close card button. */}
-            <div className="flex flex-col items-end justify-center bg-tertiary h-9">
+            <div className="flex flex-col items-end justify-center bg-grey h-9">
                 <IconButton onClick={() => props.handleClose()}>
-                    <CancelIcon className="text-white w-5 h-5"></CancelIcon>
+                    <CancelIcon className="text-grey-400 w-5 h-5"></CancelIcon>
                 </IconButton>
             </div>
             <div className="flex flex-row h-[calc(100%-36px)]">
@@ -52,7 +52,7 @@ export default function ProjectCardPopup(props: Props) {
                     orientation="vertical"
                     variant="scrollable"
                     value={selectedTab} // Set the active tab index here
-                    className=" bg-grey min-w-min"
+                    className=" bg-white min-w-min"
                     classes={{
                         indicator: "bg-primary", // Customize the indicator color here
                     }}

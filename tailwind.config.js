@@ -25,7 +25,8 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
         white: '#ffffff',
-        grey: '#ededed'
+        grey: '#ededed',
+        'grey-400': 'rgb(156 163 175)'
     }
   },
   plugins: [],
