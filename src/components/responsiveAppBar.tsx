@@ -63,7 +63,7 @@ function ResponsiveAppBar() {
                         {pages.map((page) => (
                             <motion.button
                                 whileHover={{ scale: 1.2 }}
-                                className=" p-3"
+                                className="m-3"
                                 key={page.name}
                             >
                                 <Link href={page.link}>{page.name}</Link>
