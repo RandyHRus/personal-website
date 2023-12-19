@@ -15,7 +15,7 @@ export default function Home(props: { projectId?: string }) {
                 <InitialSection />
                 {/**spacer to make sure that zoom completely ends before displaying further UI */}
                 <div
-                    className="relative flex flex-col w-screen"
+                    className="relative flex flex-col w-full"
                     style={{ height: "50vh" }}
                 />
                 <AboutSection />

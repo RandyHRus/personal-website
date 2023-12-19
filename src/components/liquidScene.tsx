@@ -347,7 +347,7 @@ function LiquidScene(props: { thisState: any }) {
                 style={{
                     opacity: fadeOpacity,
                 }}
-                className="fixed bg-tertiary h-screen w-screen z-10"
+                className="fixed bg-tertiary h-screen w-full z-10"
             >
                 <canvas
                     id="threeCanvas"
